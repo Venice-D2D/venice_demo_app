@@ -126,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             margin: const EdgeInsets.all(20),
             child: const Text(
-              'Select data channels:',
+              'Select data channels (at least one):',
             ),
           ),
           ListTile(
@@ -140,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: _file == null ? null : _startSendingFile,
+        onPressed: _canSendFile() ? _startSendingFile : null,
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
@@ -156,6 +156,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildReceiverView() {
     return Column();
+  }
+
+  bool _canSendFile() {
+    return _file != null && _dataChannelTypes.isNotEmpty;
   }
 
   Future<void> _startSendingFile() async {

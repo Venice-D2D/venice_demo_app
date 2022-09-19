@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
+import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -35,11 +36,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   BootstrapChannelType _bootstrapChannelType = BootstrapChannelType.qrCode;
+  final List<DataChannelType> _dataChannelTypes = [];
   File? _file;
 
   void _setBootstrapChannelType(BootstrapChannelType type) {
     setState(() {
       _bootstrapChannelType = type;
+    });
+  }
+  
+  void _toggleDataChannelType(DataChannelType type) {
+    setState(() {
+      if (_dataChannelTypes.contains(type)) {
+        _dataChannelTypes.remove(type);
+      } else {
+        _dataChannelTypes.add(type);
+      }
     });
   }
 
@@ -110,7 +122,21 @@ class _MyHomePageState extends State<MyHomePage> {
             trailing: Checkbox(
                 value: _bootstrapChannelType == BootstrapChannelType.qrCode,
                 onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
-          )
+          ),
+          Container(
+            margin: const EdgeInsets.all(20),
+            child: const Text(
+              'Select data channels:',
+            ),
+          ),
+          ListTile(
+            title: const Text('Wi-Fi'),
+            onTap: () => _toggleDataChannelType(DataChannelType.wifi),
+            trailing: Checkbox(
+              value: _dataChannelTypes.contains(DataChannelType.wifi),
+              onChanged: (v) => _toggleDataChannelType(DataChannelType.wifi)
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: ElevatedButton(

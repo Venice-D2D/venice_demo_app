@@ -73,9 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildSenderView() {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ElevatedButton(
+          Container(
+            margin: const EdgeInsets.only(top: 50),
+            child: ElevatedButton(
               onPressed: () async {
                 FilePickerResult? result = await FilePicker.platform.pickFiles();
                 if (result != null) {
@@ -87,13 +88,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
               },
               child: Text(
-                  _file != null
-                      ? _file!.uri.pathSegments.last
-                      : "Select file to send"
+                _file != null
+                  ? _file!.uri.pathSegments.last
+                  : "Select file to send"
               )
+            ),
           ),
           Container(
-            margin: const EdgeInsets.only(top: 40, bottom: 20),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            child: const Divider(),
+          ),
+          Container(
+            margin: const EdgeInsets.all(20),
             child: const Text(
               'Select bootstrap channel:',
             ),

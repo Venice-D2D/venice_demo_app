@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(const MyApp());
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: () {},
+        onPressed: _file == null ? null : _startSendingFile,
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
@@ -123,5 +124,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildReceiverView() {
     return Column();
+  }
+
+  Future<void> _startSendingFile() async {
+    if (_file == null) {
+      Fluttertoast.showToast(
+          msg: "Select a file before starting file sending."
+      );
+      return;
+    }
+
+    Fluttertoast.showToast(
+      msg: "Starting to send ${_file!.uri.pathSegments.last}..."
+    );
+
+    // TODO send file using selecting channels
   }
 }

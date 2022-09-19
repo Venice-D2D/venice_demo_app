@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   BootstrapChannelType _bootstrapChannelType = BootstrapChannelType.qrCode;
+  File? _file;
 
   void _setBootstrapChannelType(BootstrapChannelType type) {
     setState(() {
@@ -52,8 +56,25 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            ElevatedButton(
+                onPressed: () async {
+                  FilePickerResult? result = await FilePicker.platform.pickFiles();
+                  if (result != null) {
+                    setState(() {
+                      _file = File(result.files.single.path!);
+                    });
+                  } else {
+                    debugPrint("User selected no file.");
+                  }
+                },
+                child: Text(
+                    _file != null
+                      ? _file!.uri.pathSegments.last
+                      : "Select file to send"
+                )
+            ),
             Container(
-              margin: const EdgeInsets.only(bottom: 20),
+              margin: const EdgeInsets.only(top: 40, bottom: 20),
               child: const Text(
                 'Select bootstrap channel:',
               ),

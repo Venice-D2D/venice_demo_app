@@ -42,59 +42,72 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _startFileExchange() {
-
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-                onPressed: () async {
-                  FilePickerResult? result = await FilePicker.platform.pickFiles();
-                  if (result != null) {
-                    setState(() {
-                      _file = File(result.files.single.path!);
-                    });
-                  } else {
-                    debugPrint("User selected no file.");
-                  }
-                },
-                child: Text(
-                    _file != null
-                      ? _file!.uri.pathSegments.last
-                      : "Select file to send"
-                )
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+            bottom: const TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.send), text: "Send file"),
+                Tab(icon: Icon(Icons.inbox_sharp), text: "Receive file")
+              ],
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 40, bottom: 20),
-              child: const Text(
-                'Select bootstrap channel:',
-              ),
-            ),
-            ListTile(
-              title: const Text('QR code'),
-              onTap: () => _setBootstrapChannelType(BootstrapChannelType.qrCode),
-              trailing: Checkbox(
-                  value: _bootstrapChannelType == BootstrapChannelType.qrCode,
-                  onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
-            )
-          ],
+          ),
+          body: TabBarView(
+            children: [
+              _buildSenderView(),
+              _buildReceiverView()
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _startFileExchange,
-        tooltip: 'Start file exchange',
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.play_arrow),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
     );
+  }
+
+  Widget _buildSenderView() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        ElevatedButton(
+            onPressed: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles();
+              if (result != null) {
+                setState(() {
+                  _file = File(result.files.single.path!);
+                });
+              } else {
+                debugPrint("User selected no file.");
+              }
+            },
+            child: Text(
+                _file != null
+                    ? _file!.uri.pathSegments.last
+                    : "Select file to send"
+            )
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 40, bottom: 20),
+          child: const Text(
+            'Select bootstrap channel:',
+          ),
+        ),
+        ListTile(
+          title: const Text('QR code'),
+          onTap: () => _setBootstrapChannelType(BootstrapChannelType.qrCode),
+          trailing: Checkbox(
+              value: _bootstrapChannelType == BootstrapChannelType.qrCode,
+              onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
+        )
+      ],
+    );
+  }
+
+  Widget _buildReceiverView() {
+    return Column();
   }
 }

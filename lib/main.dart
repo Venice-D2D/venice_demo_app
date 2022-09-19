@@ -70,40 +70,54 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildSenderView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        ElevatedButton(
-            onPressed: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles();
-              if (result != null) {
-                setState(() {
-                  _file = File(result.files.single.path!);
-                });
-              } else {
-                debugPrint("User selected no file.");
-              }
-            },
-            child: Text(
-                _file != null
-                    ? _file!.uri.pathSegments.last
-                    : "Select file to send"
-            )
-        ),
-        Container(
-          margin: const EdgeInsets.only(top: 40, bottom: 20),
-          child: const Text(
-            'Select bootstrap channel:',
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ElevatedButton(
+              onPressed: () async {
+                FilePickerResult? result = await FilePicker.platform.pickFiles();
+                if (result != null) {
+                  setState(() {
+                    _file = File(result.files.single.path!);
+                  });
+                } else {
+                  debugPrint("User selected no file.");
+                }
+              },
+              child: Text(
+                  _file != null
+                      ? _file!.uri.pathSegments.last
+                      : "Select file to send"
+              )
           ),
+          Container(
+            margin: const EdgeInsets.only(top: 40, bottom: 20),
+            child: const Text(
+              'Select bootstrap channel:',
+            ),
+          ),
+          ListTile(
+            title: const Text('QR code'),
+            onTap: () => _setBootstrapChannelType(BootstrapChannelType.qrCode),
+            trailing: Checkbox(
+                value: _bootstrapChannelType == BootstrapChannelType.qrCode,
+                onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
+          )
+        ],
+      ),
+      bottomNavigationBar: ElevatedButton(
+        onPressed: () {},
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
+          )
         ),
-        ListTile(
-          title: const Text('QR code'),
-          onTap: () => _setBootstrapChannelType(BootstrapChannelType.qrCode),
-          trailing: Checkbox(
-              value: _bootstrapChannelType == BootstrapChannelType.qrCode,
-              onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
-        )
-      ],
+        child: Container(
+          margin: const EdgeInsets.all(20),
+          child: const Text("Send file"),
+        ),
+      ),
     );
   }
 

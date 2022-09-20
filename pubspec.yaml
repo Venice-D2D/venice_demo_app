@@ -38,6 +38,8 @@ dependencies:
   fluttertoast: ^8.0.9
   channel_multiplexed_scheduler:
     path: ../channel_multiplexed_scheduler
+  wifi_data_channel:
+    path: ../wifi_data_channel
 
 dev_dependencies:
   flutter_test:

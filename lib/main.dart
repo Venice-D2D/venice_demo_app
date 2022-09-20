@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import 'package:channel_multiplexed_scheduler/channels/abstractions/bootstrap_channel.dart';
+import 'package:channel_multiplexed_scheduler/scheduler/scheduler.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
+import 'package:file_exchange_example_app/scheduler_implementation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
+import 'package:wifi_data_channel/wifi_data_channel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -140,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: _canSendFile() ? _startSendingFile : null,
+        onPressed: _canSendFile() ? () => _startSendingFile(context) : null,
         style: ButtonStyle(
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
@@ -162,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return _file != null && _dataChannelTypes.isNotEmpty;
   }
 
-  Future<void> _startSendingFile() async {
+  Future<void> _startSendingFile(BuildContext context) async {
     if (_file == null) {
       Fluttertoast.showToast(
           msg: "Select a file before starting file sending."
@@ -174,6 +179,19 @@ class _MyHomePageState extends State<MyHomePage> {
       msg: "Starting to send ${_file!.uri.pathSegments.last}..."
     );
 
-    // TODO send file using selecting channels
+    BootstrapChannel bootstrapChannel = QrCodeBootstrapChannel(context);
+    Scheduler scheduler = SchedulerImplementation(bootstrapChannel);
+
+    // add data channels
+    for (var type in _dataChannelTypes) {
+      switch(type) {
+        case DataChannelType.wifi:
+          scheduler.useChannel( WifiDataChannel("wifi_data_channel") );
+          break;
+      }
+    }
+
+    await scheduler.sendFile(_file!, 100000);
+    Fluttertoast.showToast( msg: "File successfully sent!" );
   }
 }

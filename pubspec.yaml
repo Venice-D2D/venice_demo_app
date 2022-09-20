@@ -40,6 +40,8 @@ dependencies:
     path: ../channel_multiplexed_scheduler
   wifi_data_channel:
     path: ../wifi_data_channel
+  qr_code_bootstrap_channel:
+    path: ../qr_code_bootstrap_channel
 
 dev_dependencies:
   flutter_test:

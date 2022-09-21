@@ -42,6 +42,7 @@ dependencies:
     path: ../wifi_data_channel
   qr_code_bootstrap_channel:
     path: ../qr_code_bootstrap_channel
+  permission_handler: ^10.0.1
 
 dev_dependencies:
   flutter_test:

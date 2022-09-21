@@ -8,6 +8,7 @@ import 'package:file_exchange_example_app/scheduler_implementation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 
@@ -35,8 +36,17 @@ class _SenderViewState extends State<SenderView> {
         _dataChannelTypes.remove(type);
       } else {
         _dataChannelTypes.add(type);
+        _checkAssociatedPermissions(type);
       }
     });
+  }
+
+  void _checkAssociatedPermissions(DataChannelType type) async {
+    switch(type) {
+      case DataChannelType.wifi:
+        await Permission.locationWhenInUse.request();
+        break;
+    }
   }
 
   @override

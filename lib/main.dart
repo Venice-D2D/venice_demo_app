@@ -1,3 +1,4 @@
+import 'package:file_exchange_example_app/views/receiverView.dart';
 import 'package:file_exchange_example_app/views/senderView.dart';
 import 'package:flutter/material.dart';
 
@@ -45,10 +46,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              const SenderView(),
-              Column()
+              SenderView(),
+              ReceiverView()
             ],
           ),
         ),

@@ -58,6 +58,8 @@ class _SenderViewState extends State<SenderView> {
             margin: const EdgeInsets.only(top: 50),
             child: ElevatedButton(
                 onPressed: () async {
+                  // Please note that selecting a file that does not belong to
+                  // current user will throw an error.
                   FilePickerResult? result = await FilePicker.platform.pickFiles();
                   if (result != null) {
                     setState(() {

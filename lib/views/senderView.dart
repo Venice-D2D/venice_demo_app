@@ -136,10 +136,6 @@ class _SenderViewState extends State<SenderView> {
       return;
     }
 
-    Fluttertoast.showToast(
-        msg: "Starting to send ${_file!.uri.pathSegments.last}..."
-    );
-
     BootstrapChannel bootstrapChannel = QrCodeBootstrapChannel(context);
     Scheduler scheduler = SchedulerImplementation(bootstrapChannel);
 

@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   file_picker: ^5.2.0
   fluttertoast: ^8.0.9
+  venice_core:
+    path: ../venice_core
   channel_multiplexed_scheduler:
     path: ../channel_multiplexed_scheduler
   wifi_data_channel:

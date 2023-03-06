@@ -7,7 +7,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.2"
+    version: "2.9.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -15,34 +15,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  channel_multiplexed_scheduler:
-    dependency: "direct main"
-    description:
-      path: "../channel_multiplexed_scheduler"
-      relative: true
-    source: path
-    version: "0.0.1"
   characters:
     dependency: transitive
     description:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
-  charcode:
-    dependency: transitive
-    description:
-      name: charcode
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.3.1"
+    version: "1.2.1"
   clock:
     dependency: transitive
     description:
       name: clock
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   collection:
     dependency: transitive
     description:
@@ -57,13 +43,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  delta_scheduler:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: e35248a5533d1ca97603a0b263546f725d7def76
+      url: "https://github.com/Venice-D2D/delta_scheduler.git"
+    source: git
+    version: "0.0.1"
   fake_async:
     dependency: transitive
     description:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   ffi:
     dependency: transitive
     description:
@@ -134,21 +129,21 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.11"
+    version: "0.12.12"
   material_color_utilities:
     dependency: transitive
     description:
       name: material_color_utilities
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.5"
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.0"
+    version: "1.8.0"
   mobile_scanner:
     dependency: transitive
     description:
@@ -162,7 +157,7 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.2"
   permission_handler:
     dependency: "direct main"
     description:
@@ -215,9 +210,11 @@ packages:
   qr_code_bootstrap_channel:
     dependency: "direct main"
     description:
-      path: "../qr_code_bootstrap_channel"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "97a43055ab04dc30568acf33e560cf6babae49b5"
+      url: "https://github.com/Venice-D2D/qr_code_bootstrap_channel.git"
+    source: git
     version: "0.0.1"
   qr_flutter:
     dependency: transitive
@@ -237,7 +234,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.2"
+    version: "1.9.0"
   stack_trace:
     dependency: transitive
     description:
@@ -258,21 +255,21 @@ packages:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   term_glyph:
     dependency: transitive
     description:
       name: term_glyph
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.9"
+    version: "0.4.12"
   vector_math:
     dependency: transitive
     description:
@@ -280,12 +277,23 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  venice_core:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: c39fb35e9eb351b585e992623e8b2ef31b1d5133
+      url: "https://github.com/Venice-D2D/venice_core.git"
+    source: git
+    version: "1.0.0+1"
   wifi_data_channel:
     dependency: "direct main"
     description:
-      path: "../wifi_data_channel"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: ff2ffa6a15199ab6bc01b2e238d2685dee25fff8
+      url: "https://github.com/Venice-D2D/wifi_data_channel.git"
+    source: git
     version: "0.0.1"
   wifi_iot:
     dependency: transitive
@@ -294,6 +302,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.17"
+  wifi_scan:
+    dependency: transitive
+    description:
+      name: wifi_scan
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0+1"
   win32:
     dependency: transitive
     description:
@@ -302,5 +317,5 @@ packages:
     source: hosted
     version: "3.0.0"
 sdks:
-  dart: ">=2.17.6 <3.0.0"
+  dart: ">=2.18.2 <3.0.0"
   flutter: ">=3.0.0"

@@ -37,13 +37,13 @@ dependencies:
   file_picker: ^5.2.0
   fluttertoast: ^8.0.9
   venice_core:
-    path: ../venice_core
-  channel_multiplexed_scheduler:
-    path: ../channel_multiplexed_scheduler
+    git: https://github.com/Venice-D2D/venice_core.git
+  delta_scheduler:
+    git: https://github.com/Venice-D2D/delta_scheduler.git
   wifi_data_channel:
-    path: ../wifi_data_channel
+    git: https://github.com/Venice-D2D/wifi_data_channel.git
   qr_code_bootstrap_channel:
-    path: ../qr_code_bootstrap_channel
+    git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
   permission_handler: ^10.0.1
 
 dev_dependencies:

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
-import 'package:channel_multiplexed_scheduler/scheduler/scheduler.dart';
+import 'package:delta_scheduler/scheduler/scheduler.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
 import 'package:file_exchange_example_app/scheduler_implementation.dart';

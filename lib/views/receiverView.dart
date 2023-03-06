@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
-import 'package:channel_multiplexed_scheduler/receiver/receiver.dart';
+import 'package:delta_scheduler/receiver/receiver.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
 import 'package:file_picker/file_picker.dart';

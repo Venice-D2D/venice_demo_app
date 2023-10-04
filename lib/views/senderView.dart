@@ -139,6 +139,9 @@ class _SenderViewState extends State<SenderView> {
     BootstrapChannel bootstrapChannel = QrCodeBootstrapChannel(context);
     Scheduler scheduler = SchedulerImplementation(bootstrapChannel);
 
+    // Prompt user for nearby devices detection permission (on Android SDK > 32)
+    await Permission.nearbyWifiDevices.request();
+
     // add data channels
     for (var type in _dataChannelTypes) {
       switch(type) {

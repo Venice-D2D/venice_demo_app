@@ -44,7 +44,7 @@ dependencies:
     git: https://github.com/Venice-D2D/wifi_data_channel.git
   qr_code_bootstrap_channel:
     git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
-  permission_handler: ^10.0.1
+  permission_handler: ^11.0.1
 
 dev_dependencies:
   flutter_test:

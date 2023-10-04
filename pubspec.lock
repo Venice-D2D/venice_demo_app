@@ -37,10 +37,10 @@ packages:
     dependency: transitive
     description:
       name: collection
-      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
+      sha256: f092b211a4319e98e5ff58223576de6c2803db36221657b46c82574721240687
       url: "https://pub.dev"
     source: hosted
-    version: "1.18.0"
+    version: "1.17.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -181,42 +181,42 @@ packages:
     dependency: "direct main"
     description:
       name: permission_handler
-      sha256: "4a0063f48bc421970f7227f007bdafb6673585d6338bbae15a8657615aee5577"
+      sha256: "284a66179cabdf942f838543e10413246f06424d960c92ba95c84439154fcac8"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.1"
+    version: "11.0.1"
   permission_handler_android:
     dependency: transitive
     description:
       name: permission_handler_android
-      sha256: "692e5dd690cd9e978e1cefa67d97bddd3a7f4748ddac6cd8bbd1a354a6a1869f"
+      sha256: ace7d15a3d1a4a0b91c041d01e5405df221edb9de9116525efc773c74e6fc790
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
+    version: "11.0.5"
   permission_handler_apple:
     dependency: transitive
     description:
       name: permission_handler_apple
-      sha256: "6367799be76d1fe70ffe2df7f025abfe28818b450f550621778995badbebf519"
+      sha256: "99e220bce3f8877c78e4ace901082fb29fa1b4ebde529ad0932d8d664b34f3f5"
       url: "https://pub.dev"
     source: hosted
-    version: "9.0.4"
+    version: "9.1.4"
   permission_handler_platform_interface:
     dependency: transitive
     description:
       name: permission_handler_platform_interface
-      sha256: "5a053647844943fc63ee8bb5741cc7375444702e407a4d21bff666f1dffd0077"
+      sha256: f2343e9fa9c22ae4fd92d4732755bfe452214e7189afcc097380950cf567b4b2
       url: "https://pub.dev"
     source: hosted
-    version: "3.7.1"
+    version: "3.11.5"
   permission_handler_windows:
     dependency: transitive
     description:
       name: permission_handler_windows
-      sha256: "40ad5ab4d3c65d75c7f3a069065c77503aae19a1cf01ba246d43489e14f1b90c"
+      sha256: cc074aace208760f1eee6aa4fae766b45d947df85bc831cde77009cdb4720098
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0"
+    version: "0.1.3"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -267,18 +267,18 @@ packages:
     dependency: transitive
     description:
       name: stack_trace
-      sha256: "73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b"
+      sha256: c3c7d8edb15bee7f0f74debd4b9c5f3c2ea86766fe4178eb2a18eb30a0bdaed5
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.1"
+    version: "1.11.0"
   stream_channel:
     dependency: transitive
     description:
       name: stream_channel
-      sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7
+      sha256: "83615bee9045c1d322bbbd1ba209b7a749c2cbcdcb3fdd1df8eb488b3279c1c8"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.1"
   string_scanner:
     dependency: transitive
     description:
@@ -299,10 +299,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "5c2f730018264d276c20e4f1503fd1308dfbbae39ec8ee63c5236311ac06954b"
+      sha256: "75760ffd7786fffdfb9597c35c5b27eaeec82be8edfb6d71d32651128ed7aab8"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.1"
+    version: "0.6.0"
   vector_math:
     dependency: transitive
     description:
@@ -331,20 +331,18 @@ packages:
   wifi_data_channel:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: ff2ffa6a15199ab6bc01b2e238d2685dee25fff8
-      url: "https://github.com/Venice-D2D/wifi_data_channel.git"
-    source: git
+      path: "../wifi_data_channel"
+      relative: true
+    source: path
     version: "0.0.1"
   wifi_iot:
     dependency: transitive
     description:
       name: wifi_iot
-      sha256: "447ff390937f7827206654732e436ab19f36cf79ec9b75b6fe152cb736cbc026"
+      sha256: "8a0f74debaad06ec2ff869aa5f32eea8a1d3131da3ae7de655e7af6de5d0d8df"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.17"
+    version: "0.3.18+1"
   wifi_scan:
     dependency: transitive
     description:

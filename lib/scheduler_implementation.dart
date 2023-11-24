@@ -12,8 +12,12 @@ class SchedulerImplementation extends Scheduler {
       if (messages.isEmpty) {
         await Future.delayed(const Duration(milliseconds: 200));
       } else {
-        // TODO remove await
-        await sendMessage(messages.removeAt(0), channels[0]);
+        // TODO for the demonstration we send messages one by one on a single channel
+        VeniceMessage msg = messages.removeAt(0);
+        sendMessage(msg, channels[0]);
+        while (resubmissionTimers.containsKey(msg.messageId)) {
+          await Future.delayed(const Duration(milliseconds: 10));
+        }
       }
     }
   }

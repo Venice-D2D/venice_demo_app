@@ -17,6 +17,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  buffer:
+    dependency: transitive
+    description:
+      name: buffer
+      sha256: "94f60815065a8f0fd4f05be51faf86cf86519327e039d5c2aac72e1d1cc1dad4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
   characters:
     dependency: transitive
     description:
@@ -37,10 +45,10 @@ packages:
     dependency: transitive
     description:
       name: collection
-      sha256: f092b211a4319e98e5ff58223576de6c2803db36221657b46c82574721240687
+      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.2"
+    version: "1.18.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -54,7 +62,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e35248a5533d1ca97603a0b263546f725d7def76
+      resolved-ref: ce5c06d85fc161503899e43e30b94670d15ee996
       url: "https://github.com/Venice-D2D/delta_scheduler.git"
     source: git
     version: "0.0.1"
@@ -149,18 +157,18 @@ packages:
     dependency: transitive
     description:
       name: material_color_utilities
-      sha256: "9528f2f296073ff54cb9fee677df673ace1218163c3bc7628093e7eed5203d41"
+      sha256: "0e0a020085b65b6083975e499759762399b4475f766c21668c4ecca34ea74e5a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.0"
+    version: "0.8.0"
   meta:
     dependency: transitive
     description:
       name: meta
-      sha256: "3c74dbf8763d36539f114c799d8a2d87343b5067e9d796ca22b5eb8437090ee3"
+      sha256: d584fa6707a52763a52446f02cc621b077888fb63b93bbcb1143a7be5a0c0c04
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.1"
+    version: "1.11.0"
   mobile_scanner:
     dependency: transitive
     description:
@@ -229,16 +237,16 @@ packages:
     dependency: transitive
     description:
       name: qr
-      sha256: "5c4208b4dc0d55c3184d10d83ee0ded6212dc2b5e2ba17c5a0c0aab279128d21"
+      sha256: "64957a3930367bf97cc211a5af99551d630f2f4625e38af10edd6b19131b64b3"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "3.0.1"
   qr_code_bootstrap_channel:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "97a43055ab04dc30568acf33e560cf6babae49b5"
+      resolved-ref: "733ae9f27526ce178fde3b854f27515ac28b1f79"
       url: "https://github.com/Venice-D2D/qr_code_bootstrap_channel.git"
     source: git
     version: "0.0.1"
@@ -246,10 +254,10 @@ packages:
     dependency: transitive
     description:
       name: qr_flutter
-      sha256: c5c121c54cb6dd837b9b9d57eb7bc7ec6df4aee741032060c8833a678c80b87e
+      sha256: "5095f0fc6e3f71d08adef8feccc8cea4f12eec18a2e31c2e8d82cb6019f4b097"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "4.1.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -267,18 +275,18 @@ packages:
     dependency: transitive
     description:
       name: stack_trace
-      sha256: c3c7d8edb15bee7f0f74debd4b9c5f3c2ea86766fe4178eb2a18eb30a0bdaed5
+      sha256: "73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.1"
   stream_channel:
     dependency: transitive
     description:
       name: stream_channel
-      sha256: "83615bee9045c1d322bbbd1ba209b7a749c2cbcdcb3fdd1df8eb488b3279c1c8"
+      sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   string_scanner:
     dependency: transitive
     description:
@@ -299,10 +307,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "75760ffd7786fffdfb9597c35c5b27eaeec82be8edfb6d71d32651128ed7aab8"
+      sha256: "5c2f730018264d276c20e4f1503fd1308dfbbae39ec8ee63c5236311ac06954b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "0.6.1"
   vector_math:
     dependency: transitive
     description:
@@ -316,7 +324,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c39fb35e9eb351b585e992623e8b2ef31b1d5133
+      resolved-ref: "226334f99fb547493d2443818dba6214cc43152c"
       url: "https://github.com/Venice-D2D/venice_core.git"
     source: git
     version: "1.0.0+1"
@@ -324,16 +332,18 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: dc8ccd225a2005c1be616fe02951e2e342092edf968cf0844220383757ef8f10
+      sha256: afe077240a270dcfd2aafe77602b4113645af95d0ad31128cc02bce5ac5d5152
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4-beta"
+    version: "0.3.0"
   wifi_data_channel:
     dependency: "direct main"
     description:
-      path: "../wifi_data_channel"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: cb3e5509f2af4610523cc031f5326e2f32ed53e5
+      url: "https://github.com/Venice-D2D/wifi_data_channel.git"
+    source: git
     version: "0.0.1"
   wifi_iot:
     dependency: transitive
@@ -360,5 +370,5 @@ packages:
     source: hosted
     version: "5.0.3"
 sdks:
-  dart: ">=3.1.0-185.0.dev <4.0.0"
+  dart: ">=3.2.0-194.0.dev <4.0.0"
   flutter: ">=3.7.0"

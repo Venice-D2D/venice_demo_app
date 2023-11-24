@@ -341,7 +341,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: cb3e5509f2af4610523cc031f5326e2f32ed53e5
+      resolved-ref: a98165e0302d950367e238be4afffb6eb5ce3391
       url: "https://github.com/Venice-D2D/wifi_data_channel.git"
     source: git
     version: "0.0.1"

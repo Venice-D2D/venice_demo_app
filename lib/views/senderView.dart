@@ -25,12 +25,6 @@ class _SenderViewState extends State<SenderView> {
   final List<DataChannelType> _dataChannelTypes = [];
   File? _file;
 
-  void _setBootstrapChannelType(BootstrapChannelType type) {
-    setState(() {
-      _bootstrapChannelType = type;
-    });
-  }
-
   void _toggleDataChannelType(DataChannelType type) {
     setState(() {
       if (_dataChannelTypes.contains(type)) {
@@ -87,20 +81,25 @@ class _SenderViewState extends State<SenderView> {
               'Select bootstrap channel:',
             ),
           ),
-          ListTile(
+          RadioListTile<BootstrapChannelType>(
             title: const Text('QR code'),
-            onTap: () => _setBootstrapChannelType(BootstrapChannelType.qrCode),
-            trailing: Checkbox(
-                value: _bootstrapChannelType == BootstrapChannelType.qrCode,
-                onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
+            value: BootstrapChannelType.qrCode,
+            groupValue: _bootstrapChannelType,
+            onChanged: (v) {
+              setState(() {
+                _bootstrapChannelType = v!;
+              });
+            },
           ),
-          ListTile(
-            title: const Text("BLE"),
-            onTap: () => _setBootstrapChannelType(BootstrapChannelType.ble),
-            trailing: Checkbox(
-              value: _bootstrapChannelType == BootstrapChannelType.ble,
-              onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.ble),
-            ),
+          RadioListTile<BootstrapChannelType>(
+            title: const Text('BLE'),
+            value: BootstrapChannelType.ble,
+            groupValue: _bootstrapChannelType,
+            onChanged: (v) {
+              setState(() {
+                _bootstrapChannelType = v!;
+              });
+            },
           ),
           Container(
             margin: const EdgeInsets.all(20),

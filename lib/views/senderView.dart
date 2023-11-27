@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:delta_scheduler/scheduler/scheduler.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
@@ -93,6 +94,14 @@ class _SenderViewState extends State<SenderView> {
                 value: _bootstrapChannelType == BootstrapChannelType.qrCode,
                 onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
           ),
+          ListTile(
+            title: const Text("BLE"),
+            onTap: () => _setBootstrapChannelType(BootstrapChannelType.ble),
+            trailing: Checkbox(
+              value: _bootstrapChannelType == BootstrapChannelType.ble,
+              onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.ble),
+            ),
+          ),
           Container(
             margin: const EdgeInsets.all(20),
             child: const Text(
@@ -136,7 +145,18 @@ class _SenderViewState extends State<SenderView> {
       return;
     }
 
-    BootstrapChannel bootstrapChannel = QrCodeBootstrapChannel(context);
+    // set bootstrap channel
+    BootstrapChannel bootstrapChannel;
+    switch(_bootstrapChannelType) {
+      case BootstrapChannelType.qrCode:
+        bootstrapChannel = QrCodeBootstrapChannel(context);
+        break;
+      case BootstrapChannelType.ble:
+        bootstrapChannel = BleBootstrapChannel(context);
+        break;
+      default:
+        throw UnimplementedError("Bootstrap channel not initialized.");
+    }
     Scheduler scheduler = SchedulerImplementation(bootstrapChannel);
 
     // Prompt user for nearby devices detection permission (on Android SDK > 32)

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
 import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:delta_scheduler/receiver/receiver.dart';
@@ -80,6 +81,14 @@ class _ReceiverViewState extends State<ReceiverView> {
                 value: _bootstrapChannelType == BootstrapChannelType.qrCode,
                 onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.qrCode)),
           ),
+          ListTile(
+            title: const Text("BLE"),
+            onTap: () => _setBootstrapChannelType(BootstrapChannelType.ble),
+            trailing: Checkbox(
+              value: _bootstrapChannelType == BootstrapChannelType.ble,
+              onChanged: (v) => _setBootstrapChannelType(BootstrapChannelType.ble),
+            ),
+          ),
           Container(
             margin: const EdgeInsets.all(20),
             child: const Text(
@@ -127,7 +136,18 @@ class _ReceiverViewState extends State<ReceiverView> {
         msg: "Starting file reception..."
     );
 
-    BootstrapChannel bootstrapChannel = QrCodeBootstrapChannel(context);
+    // set bootstrap channel
+    BootstrapChannel bootstrapChannel;
+    switch(_bootstrapChannelType) {
+      case BootstrapChannelType.qrCode:
+        bootstrapChannel = QrCodeBootstrapChannel(context);
+        break;
+      case BootstrapChannelType.ble:
+        bootstrapChannel = BleBootstrapChannel(context);
+        break;
+      default:
+        throw UnimplementedError("Bootstrap channel not initialized.");
+    }
     Receiver receiver = Receiver(bootstrapChannel);
 
     // add data channels

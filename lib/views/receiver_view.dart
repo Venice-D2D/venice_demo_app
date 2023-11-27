@@ -12,96 +12,45 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 
 class ReceiverView extends StatefulWidget {
-  const ReceiverView({Key? key}) : super(key: key);
+  const ReceiverView({Key? key, required this.bootstrapChannelType, required this.dataChannelTypes}) : super(key: key);
+  final BootstrapChannelType bootstrapChannelType;
+  final List<DataChannelType> dataChannelTypes;
 
   @override
   State<StatefulWidget> createState() => _ReceiverViewState();
 }
 
 class _ReceiverViewState extends State<ReceiverView> {
-  BootstrapChannelType _bootstrapChannelType = BootstrapChannelType.qrCode;
-  final List<DataChannelType> _dataChannelTypes = [];
   Directory? _destination;
-
-  void _toggleDataChannelType(DataChannelType type) {
-    setState(() {
-      if (_dataChannelTypes.contains(type)) {
-        _dataChannelTypes.remove(type);
-      } else {
-        _dataChannelTypes.add(type);
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(top: 50),
-            child: ElevatedButton(
-                onPressed: () async {
-                  String? result = await FilePicker.platform.getDirectoryPath(dialogTitle: "test");
-                  if (result != null) {
-                    setState(() {
-                      _destination = Directory(result);
-                    });
-                  } else {
-                    debugPrint("User selected no file.");
-                  }
-                },
-                child: Text(
-                    _destination != null
-                        ? _destination!.uri.toString()
-                        : "Select file destination"
-                )
+      body: Flex(
+        direction: Axis.horizontal,
+        children: [
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(50),
+              child: ElevatedButton(
+                  onPressed: () async {
+                    String? result = await FilePicker.platform.getDirectoryPath(dialogTitle: "test");
+                    if (result != null) {
+                      setState(() {
+                        _destination = Directory(result);
+                      });
+                    } else {
+                      debugPrint("User selected no file.");
+                    }
+                  },
+                  child: Text(
+                      _destination != null
+                          ? _destination!.uri.toString()
+                          : "Select file destination"
+                  )
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-            child: const Divider(),
-          ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            child: const Text(
-              'Select bootstrap channel:',
-            ),
-          ),
-          RadioListTile<BootstrapChannelType>(
-            title: const Text('QR code'),
-            value: BootstrapChannelType.qrCode,
-            groupValue: _bootstrapChannelType,
-            onChanged: (v) {
-              setState(() {
-                _bootstrapChannelType = v!;
-              });
-            },
-          ),
-          RadioListTile<BootstrapChannelType>(
-            title: const Text('BLE'),
-            value: BootstrapChannelType.ble,
-            groupValue: _bootstrapChannelType,
-            onChanged: (v) {
-              setState(() {
-                _bootstrapChannelType = v!;
-              });
-            },
-          ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            child: const Text(
-              'Select data channels (at least one):',
-            ),
-          ),
-          ListTile(
-            title: const Text('Wi-Fi'),
-            onTap: () => _toggleDataChannelType(DataChannelType.wifi),
-            trailing: Checkbox(
-                value: _dataChannelTypes.contains(DataChannelType.wifi),
-                onChanged: (v) => _toggleDataChannelType(DataChannelType.wifi)
-            ),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: ElevatedButton(
@@ -120,7 +69,7 @@ class _ReceiverViewState extends State<ReceiverView> {
   }
 
   bool _canReceiveFile() {
-    return _destination != null && _dataChannelTypes.isNotEmpty;
+    return _destination != null && widget.dataChannelTypes.isNotEmpty;
   }
 
   Future<void> _startReceivingFile(BuildContext context) async {
@@ -137,7 +86,7 @@ class _ReceiverViewState extends State<ReceiverView> {
 
     // set bootstrap channel
     BootstrapChannel bootstrapChannel;
-    switch(_bootstrapChannelType) {
+    switch(widget.bootstrapChannelType) {
       case BootstrapChannelType.qrCode:
         bootstrapChannel = QrCodeBootstrapChannel(context);
         break;
@@ -150,7 +99,7 @@ class _ReceiverViewState extends State<ReceiverView> {
     Receiver receiver = Receiver(bootstrapChannel);
 
     // add data channels
-    for (var type in _dataChannelTypes) {
+    for (var type in widget.dataChannelTypes) {
       switch(type) {
         case DataChannelType.wifi:
           receiver.useChannel( WifiDataChannel("wifi_data_channel") );

@@ -1,6 +1,10 @@
 import 'package:file_exchange_example_app/views/receiver_view.dart';
 import 'package:file_exchange_example_app/views/sender_view.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'channelTypes/bootstrap_channel_type.dart';
+import 'channelTypes/data_channel_type.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +35,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  BootstrapChannelType _bootstrapChannelType = BootstrapChannelType.qrCode;
+  final List<DataChannelType> _dataChannelTypes = [];
+
+  void _toggleDataChannelType(DataChannelType type) {
+    setState(() {
+      if (_dataChannelTypes.contains(type)) {
+        _dataChannelTypes.remove(type);
+      } else {
+        _dataChannelTypes.add(type);
+        _checkAssociatedPermissions(type);
+      }
+    });
+  }
+
+  void _checkAssociatedPermissions(DataChannelType type) async {
+    switch(type) {
+      case DataChannelType.wifi:
+        await Permission.locationWhenInUse.request();
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,15 +72,69 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          body: const TabBarView(
+          body: Flex(
+            direction: Axis.vertical,
             children: [
-              SenderView(),
-              ReceiverView()
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: const Text(
+                  'Select bootstrap channel:',
+                ),
+              ),
+              RadioListTile<BootstrapChannelType>(
+                title: const Text('QR code'),
+                value: BootstrapChannelType.qrCode,
+                groupValue: _bootstrapChannelType,
+                onChanged: (v) {
+                  setState(() {
+                    _bootstrapChannelType = v!;
+                  });
+                },
+              ),
+              RadioListTile<BootstrapChannelType>(
+                title: const Text('BLE'),
+                value: BootstrapChannelType.ble,
+                groupValue: _bootstrapChannelType,
+                onChanged: (v) {
+                  setState(() {
+                    _bootstrapChannelType = v!;
+                  });
+                },
+              ),
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: const Text(
+                  'Select data channels (at least one):',
+                ),
+              ),
+              ListTile(
+                title: const Text('Wi-Fi'),
+                onTap: () => _toggleDataChannelType(DataChannelType.wifi),
+                trailing: Checkbox(
+                    value: _dataChannelTypes.contains(DataChannelType.wifi),
+                    onChanged: (v) => _toggleDataChannelType(DataChannelType.wifi)
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                child: const Divider(),
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    SenderView(
+                        bootstrapChannelType: _bootstrapChannelType,
+                        dataChannelTypes: _dataChannelTypes),
+                    ReceiverView(
+                        bootstrapChannelType: _bootstrapChannelType,
+                        dataChannelTypes: _dataChannelTypes),
+                  ],
+                ),
+              )
             ],
           ),
         ),
       ),
-
     );
   }
 }

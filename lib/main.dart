@@ -1,5 +1,5 @@
-import 'package:file_exchange_example_app/views/receiverView.dart';
-import 'package:file_exchange_example_app/views/senderView.dart';
+import 'package:file_exchange_example_app/views/receiver_view.dart';
+import 'package:file_exchange_example_app/views/sender_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {

@@ -23,8 +23,8 @@ class _VideoStreamingPageState extends State<VideoStreamingPage> {
             ),
             bottom: const TabBar(
               tabs: [
-                Tab(icon: Icon(Icons.send), text: "Send video"),
-                Tab(icon: Icon(Icons.inbox_sharp), text: "Receive video")
+                Tab(icon: Icon(Icons.videocam), text: "Send video"),
+                Tab(icon: Icon(Icons.screenshot_monitor), text: "Receive video")
               ],
             ),
           ),

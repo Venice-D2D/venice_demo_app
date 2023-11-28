@@ -43,6 +43,10 @@ class _FileExchangePageState extends State<FileExchangePage> {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('File exchange example'),
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.send), text: "Send file"),

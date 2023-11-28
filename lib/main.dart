@@ -1,10 +1,5 @@
-import 'package:file_exchange_example_app/views/receiver_view.dart';
-import 'package:file_exchange_example_app/views/sender_view.dart';
+import 'package:file_exchange_example_app/views/file/main.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-
-import 'channelTypes/bootstrap_channel_type.dart';
-import 'channelTypes/data_channel_type.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,121 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'File exchange example app'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  BootstrapChannelType _bootstrapChannelType = BootstrapChannelType.qrCode;
-  final List<DataChannelType> _dataChannelTypes = [];
-
-  void _toggleDataChannelType(DataChannelType type) {
-    setState(() {
-      if (_dataChannelTypes.contains(type)) {
-        _dataChannelTypes.remove(type);
-      } else {
-        _dataChannelTypes.add(type);
-        _checkAssociatedPermissions(type);
-      }
-    });
-  }
-
-  void _checkAssociatedPermissions(DataChannelType type) async {
-    switch(type) {
-      case DataChannelType.wifi:
-        await Permission.locationWhenInUse.request();
-        break;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-            bottom: const TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.send), text: "Send file"),
-                Tab(icon: Icon(Icons.inbox_sharp), text: "Receive file")
-              ],
-            ),
-          ),
-          body: Flex(
-            direction: Axis.vertical,
-            children: [
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: const Text(
-                  'Select bootstrap channel:',
-                ),
-              ),
-              RadioListTile<BootstrapChannelType>(
-                title: const Text('QR code'),
-                value: BootstrapChannelType.qrCode,
-                groupValue: _bootstrapChannelType,
-                onChanged: (v) {
-                  setState(() {
-                    _bootstrapChannelType = v!;
-                  });
-                },
-              ),
-              RadioListTile<BootstrapChannelType>(
-                title: const Text('BLE'),
-                value: BootstrapChannelType.ble,
-                groupValue: _bootstrapChannelType,
-                onChanged: (v) {
-                  setState(() {
-                    _bootstrapChannelType = v!;
-                  });
-                },
-              ),
-              Container(
-                margin: const EdgeInsets.all(20),
-                child: const Text(
-                  'Select data channels (at least one):',
-                ),
-              ),
-              ListTile(
-                title: const Text('Wi-Fi'),
-                onTap: () => _toggleDataChannelType(DataChannelType.wifi),
-                trailing: Checkbox(
-                    value: _dataChannelTypes.contains(DataChannelType.wifi),
-                    onChanged: (v) => _toggleDataChannelType(DataChannelType.wifi)
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                child: const Divider(),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    SenderView(
-                        bootstrapChannelType: _bootstrapChannelType,
-                        dataChannelTypes: _dataChannelTypes),
-                    ReceiverView(
-                        bootstrapChannelType: _bootstrapChannelType,
-                        dataChannelTypes: _dataChannelTypes),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+      home: const FileExchangePage(title: 'File exchange example app'),
     );
   }
 }

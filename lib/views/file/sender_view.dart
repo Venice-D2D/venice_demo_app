@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
+import 'package:file_exchange_example_app/model/app_model.dart';
+import 'package:provider/provider.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:delta_scheduler/scheduler/scheduler.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
@@ -14,9 +16,7 @@ import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 
 class SenderView extends StatefulWidget {
-  const SenderView({Key? key, required this.bootstrapChannelType, required this.dataChannelTypes}) : super(key: key);
-  final BootstrapChannelType bootstrapChannelType;
-  final List<DataChannelType> dataChannelTypes;
+  const SenderView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SenderViewState();
@@ -58,7 +58,7 @@ class _SenderViewState extends State<SenderView> {
         ],
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: _canSendFile() ? () => _startSendingFile(context) : null,
+        onPressed: _canSendFile(context) ? () => _startSendingFile(context) : null,
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
@@ -72,8 +72,8 @@ class _SenderViewState extends State<SenderView> {
     );
   }
 
-  bool _canSendFile() {
-    return file != null && widget.dataChannelTypes.isNotEmpty;
+  bool _canSendFile(BuildContext context) {
+    return file != null && Provider.of<AppModel>(context, listen: false).dataChannelTypes.isNotEmpty;
   }
 
   Future<void> _startSendingFile(BuildContext context) async {
@@ -86,7 +86,7 @@ class _SenderViewState extends State<SenderView> {
 
     // set bootstrap channel
     BootstrapChannel bootstrapChannel;
-    switch(widget.bootstrapChannelType) {
+    switch(Provider.of<AppModel>(context, listen: false).bootstrapChannelType) {
       case BootstrapChannelType.qrCode:
         bootstrapChannel = QrCodeBootstrapChannel(context);
         break;
@@ -102,7 +102,7 @@ class _SenderViewState extends State<SenderView> {
     await Permission.nearbyWifiDevices.request();
 
     // add data channels
-    for (var type in widget.dataChannelTypes) {
+    for (var type in Provider.of<AppModel>(context, listen: false).dataChannelTypes) {
       switch(type) {
         case DataChannelType.wifi:
           scheduler.useChannel( WifiDataChannel("wifi_data_channel") );

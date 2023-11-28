@@ -1,9 +1,16 @@
+import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:file_exchange_example_app/views/file/main.dart';
 import 'package:file_exchange_example_app/views/video/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+      ChangeNotifierProvider(
+        create: (_) => AppModel(),
+        child: const MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

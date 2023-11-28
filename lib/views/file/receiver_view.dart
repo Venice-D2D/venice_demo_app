@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
+import 'package:file_exchange_example_app/model/app_model.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:delta_scheduler/receiver/receiver.dart';
@@ -12,9 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 
 class ReceiverView extends StatefulWidget {
-  const ReceiverView({Key? key, required this.bootstrapChannelType, required this.dataChannelTypes}) : super(key: key);
-  final BootstrapChannelType bootstrapChannelType;
-  final List<DataChannelType> dataChannelTypes;
+  const ReceiverView({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ReceiverViewState();
@@ -54,7 +54,7 @@ class _ReceiverViewState extends State<ReceiverView> {
         ],
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: _canReceiveFile() ? () => _startReceivingFile(context) : null,
+        onPressed: _canReceiveFile(context) ? () => _startReceivingFile(context) : null,
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
@@ -68,8 +68,8 @@ class _ReceiverViewState extends State<ReceiverView> {
     );
   }
 
-  bool _canReceiveFile() {
-    return _destination != null && widget.dataChannelTypes.isNotEmpty;
+  bool _canReceiveFile(BuildContext context) {
+    return _destination != null && Provider.of<AppModel>(context, listen: false).dataChannelTypes.isNotEmpty;
   }
 
   Future<void> _startReceivingFile(BuildContext context) async {
@@ -86,7 +86,7 @@ class _ReceiverViewState extends State<ReceiverView> {
 
     // set bootstrap channel
     BootstrapChannel bootstrapChannel;
-    switch(widget.bootstrapChannelType) {
+    switch(Provider.of<AppModel>(context, listen: false).bootstrapChannelType) {
       case BootstrapChannelType.qrCode:
         bootstrapChannel = QrCodeBootstrapChannel(context);
         break;
@@ -99,7 +99,7 @@ class _ReceiverViewState extends State<ReceiverView> {
     Receiver receiver = Receiver(bootstrapChannel);
 
     // add data channels
-    for (var type in widget.dataChannelTypes) {
+    for (var type in Provider.of<AppModel>(context, listen: false).dataChannelTypes) {
       switch(type) {
         case DataChannelType.wifi:
           receiver.useChannel( WifiDataChannel("wifi_data_channel") );

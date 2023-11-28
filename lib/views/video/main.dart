@@ -1,4 +1,6 @@
 import 'package:file_exchange_example_app/components/channels_selector.dart';
+import 'package:file_exchange_example_app/views/video/receiver_view.dart';
+import 'package:file_exchange_example_app/views/video/sender_view.dart';
 import 'package:flutter/material.dart';
 
 class VideoStreamingPage extends StatefulWidget {
@@ -31,11 +33,18 @@ class _VideoStreamingPageState extends State<VideoStreamingPage> {
           body: const Flex(
             direction: Axis.vertical,
             children: [
-              Flex(
-                direction: Axis.vertical,
-                children: [
-                  ChannelsSelector()
-                ],
+              Expanded(
+                flex: 2,
+                child: ChannelsSelector(),
+              ),
+              Expanded(
+                flex: 1,
+                child: TabBarView(
+                  children: [
+                    VideoSenderView(),
+                    VideoReceiverView()
+                  ],
+                ),
               )
             ]
           ),

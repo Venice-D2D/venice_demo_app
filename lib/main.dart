@@ -1,4 +1,5 @@
 import 'package:file_exchange_example_app/views/file/main.dart';
+import 'package:file_exchange_example_app/views/video/main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (_) => const HomePage(),
-        '/file': (_) => const FileExchangePage()
+        '/file': (_) => const FileExchangePage(),
+        '/video': (_) => const VideoStreamingPage()
       },
       initialRoute: '/',
     );
@@ -40,6 +42,12 @@ class HomePage extends StatelessWidget {
             title: const Text('File exchange'),
             subtitle: const Text('Send files from one phone to another.'),
             onTap: () => Navigator.of(context).pushNamed('/file'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.videocam),
+            title: const Text('Video streaming'),
+            subtitle: const Text('Display video stream of one device on another.'),
+            onTap: () => Navigator.of(context).pushNamed('/video'),
           )
         ],
       ),

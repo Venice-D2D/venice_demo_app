@@ -16,9 +16,33 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/': (_) => const FileExchangePage()
+        '/': (_) => const HomePage(),
+        '/file': (_) => const FileExchangePage()
       },
       initialRoute: '/',
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Venice example app"),
+      ),
+      body: Column(
+        children: [
+          ListTile(
+            leading: const Icon(Icons.file_copy_rounded),
+            title: const Text('File exchange'),
+            subtitle: const Text('Send files from one phone to another.'),
+            onTap: () => Navigator.of(context).pushNamed('/file'),
+          )
+        ],
+      ),
     );
   }
 }

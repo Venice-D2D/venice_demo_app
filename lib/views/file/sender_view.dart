@@ -1,27 +1,29 @@
 import 'dart:io';
 
 import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
-import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
+import 'package:file_exchange_example_app/model/app_model.dart';
+import 'package:provider/provider.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
-import 'package:delta_scheduler/receiver/receiver.dart';
+import 'package:delta_scheduler/scheduler/scheduler.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
+import 'package:file_exchange_example_app/scheduler_implementation.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 
-class ReceiverView extends StatefulWidget {
-  const ReceiverView({Key? key, required this.bootstrapChannelType, required this.dataChannelTypes}) : super(key: key);
-  final BootstrapChannelType bootstrapChannelType;
-  final List<DataChannelType> dataChannelTypes;
+class SenderView extends StatefulWidget {
+  const SenderView({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ReceiverViewState();
+  State<StatefulWidget> createState() => _SenderViewState();
 }
 
-class _ReceiverViewState extends State<ReceiverView> {
-  Directory? _destination;
+class _SenderViewState extends State<SenderView> {
+  File? file;
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +36,21 @@ class _ReceiverViewState extends State<ReceiverView> {
               margin: const EdgeInsets.all(50),
               child: ElevatedButton(
                   onPressed: () async {
-                    String? result = await FilePicker.platform.getDirectoryPath(dialogTitle: "test");
+                    // Please note that selecting a file that does not belong to
+                    // current user will throw an error.
+                    FilePickerResult? result = await FilePicker.platform.pickFiles();
                     if (result != null) {
                       setState(() {
-                        _destination = Directory(result);
+                        file = File(result.files.single.path!);
                       });
                     } else {
                       debugPrint("User selected no file.");
                     }
                   },
                   child: Text(
-                      _destination != null
-                          ? _destination!.uri.toString()
-                          : "Select file destination"
+                      file != null
+                          ? file!.uri.pathSegments.last
+                          : "Select file to send"
                   )
               ),
             ),
@@ -54,7 +58,7 @@ class _ReceiverViewState extends State<ReceiverView> {
         ],
       ),
       bottomNavigationBar: ElevatedButton(
-        onPressed: _canReceiveFile() ? () => _startReceivingFile(context) : null,
+        onPressed: _canSendFile(context) ? () => _startSendingFile(context) : null,
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
@@ -62,31 +66,27 @@ class _ReceiverViewState extends State<ReceiverView> {
         ),
         child: Container(
           margin: const EdgeInsets.all(20),
-          child: const Text("Receive file"),
+          child: const Text("Send file"),
         ),
       ),
     );
   }
 
-  bool _canReceiveFile() {
-    return _destination != null && widget.dataChannelTypes.isNotEmpty;
+  bool _canSendFile(BuildContext context) {
+    return file != null && Provider.of<AppModel>(context, listen: false).dataChannelTypes.isNotEmpty;
   }
 
-  Future<void> _startReceivingFile(BuildContext context) async {
-    if (_destination == null) {
+  Future<void> _startSendingFile(BuildContext context) async {
+    if (file == null) {
       Fluttertoast.showToast(
-          msg: "Select a destination directory before starting file reception."
+          msg: "Select a file before starting file sending."
       );
       return;
     }
 
-    Fluttertoast.showToast(
-        msg: "Starting file reception..."
-    );
-
     // set bootstrap channel
     BootstrapChannel bootstrapChannel;
-    switch(widget.bootstrapChannelType) {
+    switch(Provider.of<AppModel>(context, listen: false).bootstrapChannelType) {
       case BootstrapChannelType.qrCode:
         bootstrapChannel = QrCodeBootstrapChannel(context);
         break;
@@ -96,18 +96,21 @@ class _ReceiverViewState extends State<ReceiverView> {
       default:
         throw UnimplementedError("Bootstrap channel not initialized.");
     }
-    Receiver receiver = Receiver(bootstrapChannel);
+    Scheduler scheduler = SchedulerImplementation(bootstrapChannel);
+
+    // Prompt user for nearby devices detection permission (on Android SDK > 32)
+    await Permission.nearbyWifiDevices.request();
 
     // add data channels
-    for (var type in widget.dataChannelTypes) {
+    for (var type in Provider.of<AppModel>(context, listen: false).dataChannelTypes) {
       switch(type) {
         case DataChannelType.wifi:
-          receiver.useChannel( WifiDataChannel("wifi_data_channel") );
+          scheduler.useChannel( WifiDataChannel("wifi_data_channel") );
           break;
       }
     }
 
-    await receiver.receiveFile(_destination!);
-    Fluttertoast.showToast( msg: "File successfully received!" );
+    await scheduler.sendFile(file!, 100000);
+    Fluttertoast.showToast( msg: "File successfully sent!" );
   }
 }

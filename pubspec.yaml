@@ -47,6 +47,7 @@ dependencies:
   qr_code_bootstrap_channel:
     git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
   permission_handler: ^11.0.1
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:

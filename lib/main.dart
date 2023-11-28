@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'File exchange example app',
+      title: 'Venice example app',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FileExchangePage(title: 'File exchange example app'),
+      home: const FileExchangePage(),
     );
   }
 }

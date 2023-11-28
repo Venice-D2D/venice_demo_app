@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class FileExchangePage extends StatefulWidget {
-  const FileExchangePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const FileExchangePage({Key? key}) : super(key: key);
 
   @override
   State<FileExchangePage> createState() => _FileExchangePageState();
@@ -44,7 +42,7 @@ class _FileExchangePageState extends State<FileExchangePage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(widget.title),
+            title: const Text('File exchange example'),
             bottom: const TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.send), text: "Send file"),

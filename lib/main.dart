@@ -1,4 +1,5 @@
 import 'package:file_exchange_example_app/model/app_model.dart';
+import 'package:file_exchange_example_app/views/copypaste/main.dart';
 import 'package:file_exchange_example_app/views/file/main.dart';
 import 'package:file_exchange_example_app/views/video/main.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (_) => const HomePage(),
         '/file': (_) => const FileExchangePage(),
-        '/video': (_) => const VideoStreamingPage()
+        '/video': (_) => const VideoStreamingPage(),
+        '/copy': (_) => const CopyPastePage()
       },
       initialRoute: '/',
     );
@@ -55,6 +57,12 @@ class HomePage extends StatelessWidget {
             title: const Text('Video streaming'),
             subtitle: const Text('Display video stream of one device on another.'),
             onTap: () => Navigator.of(context).pushNamed('/video'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.content_paste_go_rounded),
+            title: const Text('Copy paste'),
+            subtitle: const Text('Copy text on one device, paste it on another.'),
+            onTap: () => Navigator.of(context).pushNamed('/copy'),
           )
         ],
       ),

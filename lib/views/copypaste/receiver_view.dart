@@ -20,43 +20,43 @@ class _CopyPasteReceiverViewState extends State<CopyPasteReceiverView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppModel>(
-        builder: (context, model, child) {
-          return Scaffold(
-            body: Flex(
-              direction: Axis.horizontal,
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    child: Container(
-                        margin: const EdgeInsets.all(50),
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: "Try to paste some text here!"
-                          ),
-                          minLines: 1,
-                          maxLines: 1,
-                        )
+    return Scaffold(
+      body: Flex(
+        direction: Axis.horizontal,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: Container(
+                  margin: const EdgeInsets.all(50),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                        hintText: "Try to paste some text here!"
                     ),
-                  ),
-                )
-              ],
-            ),
-            bottomNavigationBar: ElevatedButton(
-              onPressed: canReceiveText() ? () => startReceivingText(context) : null,
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
+                    minLines: 1,
+                    maxLines: 1,
                   )
               ),
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                child: const Text("Receive text"),
-              ),
+            ),
+          )
+        ],
+      ),
+      bottomNavigationBar: Consumer<AppModel>(
+        builder: (BuildContext context, AppModel value, Widget? child) {
+          return ElevatedButton(
+            onPressed: canReceiveText() ? () => startReceivingText(context) : null,
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
+              )
+            ),
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              child: const Text("Receive text"),
             ),
           );
-        }
+        },
+      ),
     );
   }
 }

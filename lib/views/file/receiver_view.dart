@@ -53,17 +53,21 @@ class _ReceiverViewState extends State<ReceiverView> {
           )
         ],
       ),
-      bottomNavigationBar: ElevatedButton(
-        onPressed: _canReceiveFile(context) ? () => _startReceivingFile(context) : null,
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      bottomNavigationBar: Consumer<AppModel>(
+        builder: (BuildContext context, AppModel value, Widget? child) {
+          return ElevatedButton(
+            onPressed: _canReceiveFile(context) ? () => _startReceivingFile(context) : null,
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
-            )
-        ),
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: const Text("Receive file"),
-        ),
+              )
+            ),
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              child: const Text("Receive file"),
+            ),
+          );
+        },
       ),
     );
   }

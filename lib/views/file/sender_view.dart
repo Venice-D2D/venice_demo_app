@@ -57,17 +57,21 @@ class _SenderViewState extends State<SenderView> {
           )
         ],
       ),
-      bottomNavigationBar: ElevatedButton(
-        onPressed: _canSendFile(context) ? () => _startSendingFile(context) : null,
-        style: ButtonStyle(
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
-            )
-        ),
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: const Text("Send file"),
-        ),
+      bottomNavigationBar: Consumer<AppModel>(
+        builder: (BuildContext context, AppModel value, Widget? child) {
+          return ElevatedButton(
+            onPressed: _canSendFile(context) ? () => _startSendingFile(context) : null,
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    const RoundedRectangleBorder( borderRadius: BorderRadius.zero )
+                )
+            ),
+            child: Container(
+              margin: const EdgeInsets.all(20),
+              child: const Text("Send file"),
+            ),
+          );
+        },
       ),
     );
   }

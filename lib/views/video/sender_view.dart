@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
 import 'package:file_exchange_example_app/model/app_model.dart';
+import 'package:file_exchange_example_app/views/video/image_encoding.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +16,7 @@ class VideoSenderView extends StatefulWidget {
 
 class _VideoSenderViewState extends State<VideoSenderView> {
   late CameraController controller;
+  Uint8List? imageBytes;
 
   // todo remove
   int imagesCount = 0;
@@ -35,6 +38,9 @@ class _VideoSenderViewState extends State<VideoSenderView> {
     imagesCount = 0;
     controller.startImageStream((image) {
       imagesCount += 1;
+      setState(() {
+        imageBytes = convertYUV420toImageColor(image);
+      });
     });
     Timer t = Timer.periodic(const Duration(seconds: 1), (timer) {
       debugPrint("==> FPS: $imagesCount");
@@ -59,6 +65,7 @@ class _VideoSenderViewState extends State<VideoSenderView> {
     return Consumer<AppModel>(
         builder: (context, model, child) {
           return Scaffold(
+            body: imageBytes == null ? Container() : Image.memory(imageBytes!),
             bottomNavigationBar: ElevatedButton(
               onPressed: canSendVideo() ? () => startVideoStreaming(context) : null,
               style: ButtonStyle(

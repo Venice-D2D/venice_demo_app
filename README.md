@@ -1,16 +1,27 @@
-# file_exchange_example_app
+# Venice example app
 
 An example application to test communication channels.
 
-## Getting Started
+Several use-cases have been implemented in this application and are available for you to try:
+* file exchange;
+* video streaming;
+* remote text copy/pasting.
 
-This project is a starting point for a Flutter application.
+The following communication channels are currently implemented:
+* Bootstrap channels:
+  * BLE: https://github.com/Venice-D2D/ble_bootstrap_channel
+  * QR code: https://github.com/Venice-D2D/qr_code_bootstrap_channel
+* Data channels:
+  * Wi-Fi: https://github.com/Venice-D2D/wifi_data_channel
 
-A few resources to get you started if this is your first Flutter project:
+## Development
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This application has been tested with Flutter version `3.16.0`.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```shell
+# Install dependencies
+flutter pub get
+
+# Run app
+flutter pub run
+```

@@ -118,8 +118,8 @@ class _CopyPasteReceiverViewState extends State<CopyPasteReceiverView> {
                     decoration: const InputDecoration(
                         hintText: "Try to paste some text here!"
                     ),
-                    minLines: 1,
-                    maxLines: 1,
+                    minLines: 2,
+                    maxLines: 2,
                   )
               ),
             ),

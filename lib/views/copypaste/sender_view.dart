@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
+import 'package:venice_core/channels/abstractions/data_channel.dart';
+import 'package:venice_core/channels/events/data_channel_event.dart';
+import 'package:venice_core/metadata/file_metadata.dart';
+import 'package:venice_core/network/message.dart';
 
 /// UI for the copy-pasting sending part of the application.
 ///
@@ -87,8 +94,42 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
       return;
     }
 
-    debugPrint("Trying to send some text: $textToSend");
+    // Configure bootstrap + data channels
+    AppModel model = Provider.of<AppModel>(context, listen: false);
+    BootstrapChannel bootstrapChannel = model.getBootstrapChannel(context);
+    List<DataChannel> dataChannels = model.getDataChannels(context);
 
-    throw UnimplementedError();
+    // Open all channels
+    await bootstrapChannel.initSender();
+    // Fake data
+    await bootstrapChannel.sendFileMetadata(
+        FileMetadata("hello there", 100000, 1)
+    );
+    await Future.wait(dataChannels.map((c) => c.initSender( bootstrapChannel )));
+
+    // Only use one data channel in this use-case since there's not much data to
+    // transmit
+    bool transmitted = false;
+    DataChannel channel = dataChannels.first;
+    channel.on = (DataChannelEvent event, dynamic data) {
+      switch(event) {
+        case DataChannelEvent.acknowledgment:
+          transmitted = true;
+          break;
+        default:
+          break;
+      }
+    };
+    VeniceMessage message = VeniceMessage.data(0, utf8.encode(textToSend));
+    dataChannels.first.sendMessage( message );
+
+    while(!transmitted) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    Fluttertoast.showToast(
+      msg: "Text copied successfully!",
+      toastLength: Toast.LENGTH_LONG
+    );
   }
 }

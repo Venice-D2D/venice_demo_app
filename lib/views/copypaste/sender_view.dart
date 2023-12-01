@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/// UI for the copy-pasting sending part of the application.
+///
+/// This contains a text input component holding text that will be send through
+/// the network, and a button starting the data sending process.
 class CopyPasteSenderView extends StatefulWidget {
   const CopyPasteSenderView({Key? key}) : super(key: key);
 
@@ -11,6 +15,7 @@ class CopyPasteSenderView extends StatefulWidget {
 }
 
 class _CopyPasteViewState extends State<CopyPasteSenderView> {
+  /// Text to be send through network.
   String textToSend = "Prouver que j’ai raison serait accorder que je puis avoir tort.";
 
   @override
@@ -58,10 +63,22 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
     );
   }
 
+  /// Returns whether text sending process can begin.
+  ///
+  /// For this to be true, text input component must contain some words (= not
+  /// empty) and at least one data channel must be selected.
   bool _canSendText(BuildContext context) {
     return textToSend.isNotEmpty && Provider.of<AppModel>(context, listen: false).dataChannelTypes.isNotEmpty;
   }
 
+  /// Does the actual text sending magic.
+  ///
+  /// This will retrieve bootstrap and data channels to be used in the text
+  /// sending process, initialize a [Scheduler] instance with them, and start
+  /// text sending.
+  ///
+  /// During the process, some toast messages will be displayed to inform user
+  /// about what's going on.
   Future<void> _startSendingText(BuildContext context) async {
     if (textToSend.isEmpty) {
       Fluttertoast.showToast(
@@ -71,5 +88,7 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
     }
 
     debugPrint("Trying to send some text: $textToSend");
+
+    throw UnimplementedError();
   }
 }

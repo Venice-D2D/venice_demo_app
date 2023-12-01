@@ -2,6 +2,10 @@ import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// UI for the copy-pasting reception part of the application.
+///
+/// This contains a text input widget that can be used to paste text received
+/// through data channels, and a button used to start text reception.
 class CopyPasteReceiverView extends StatefulWidget {
   const CopyPasteReceiverView({super.key});
 
@@ -10,12 +14,22 @@ class CopyPasteReceiverView extends StatefulWidget {
 }
 
 class _CopyPasteReceiverViewState extends State<CopyPasteReceiverView> {
+  /// Returns whether text reception can start.
+  /// For this to be true, at least one data channel must be selected.
   bool canReceiveText() {
     return Provider.of<AppModel>(context, listen: false).dataChannelTypes.isNotEmpty;
   }
 
+  /// Does the actual text reception magic.
+  ///
+  /// This will retrieve bootstrap and data channels to be used in the text
+  /// reception process, initialize a [Receiver] instance with them, and start
+  /// text reception.
+  ///
+  /// During the process, some toast messages will be displayed to inform user
+  /// about what's going on.
   void startReceivingText(BuildContext context) {
-
+    throw UnimplementedError();
   }
 
   @override

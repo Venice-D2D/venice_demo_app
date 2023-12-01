@@ -5,9 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
+/// UI for the channels selection that's used in all experiment subviews of this
+/// application.
+///
+/// This is barely an interface for the [AppModel] instance, allowing user to
+/// select the channels they want to use in this demonstration example app.
 class ChannelsSelector extends StatelessWidget {
   const ChannelsSelector({super.key});
 
+  /// Registers a data channel type in the list of channels to be used in future
+  /// data exchanges, or removes it from the list if it's already included.
   void _toggleDataChannelType(DataChannelType type, AppModel model) {
     if (model.dataChannelTypes.contains(type)) {
       model.removeDataChannelType(type);
@@ -17,6 +24,8 @@ class ChannelsSelector extends StatelessWidget {
     }
   }
 
+  /// Asks user to give all permissions required by channel [type] to the demo
+  /// app.
   void _checkAssociatedPermissions(DataChannelType type) async {
     switch(type) {
       case DataChannelType.wifi:

@@ -10,6 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
 
+/// UI for the file sending part of the application.
+///
+/// This contains a file selection button, to select the file to be sent, and
+/// another button used to start file sending.
 class SenderView extends StatefulWidget {
   const SenderView({Key? key}) : super(key: key);
 
@@ -71,10 +75,22 @@ class _SenderViewState extends State<SenderView> {
     );
   }
 
+  /// Returns whether file sending can begin.
+  ///
+  /// For this to be true, a file to send must be selected, and at least one
+  /// data channel must be selected.
   bool _canSendFile(BuildContext context) {
     return file != null && Provider.of<AppModel>(context, listen: false).dataChannelTypes.isNotEmpty;
   }
 
+  /// Does the actual file sending.
+  ///
+  /// This will retrieve bootstrap and data channels to be used in the file
+  /// sending process, initialize a [Scheduler] instance with them, and start
+  /// file sending.
+  ///
+  /// During the process, some toast messages will be displayed to inform user
+  /// about what's going on.
   Future<void> _startSendingFile(BuildContext context) async {
     if (file == null) {
       Fluttertoast.showToast(

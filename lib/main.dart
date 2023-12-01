@@ -35,6 +35,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// Home screen of the application.
+///
+/// It allows users to select one device-to-device use-case, including:
+///   * file exchange;
+///   * video streaming;
+///   * remote text copy-pasting.
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 

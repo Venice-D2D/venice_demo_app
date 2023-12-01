@@ -1,17 +1,13 @@
 import 'dart:io';
 
-import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
 import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:delta_scheduler/receiver/receiver.dart';
-import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
-import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:wifi_data_channel/wifi_data_channel.dart';
+import 'package:venice_core/channels/abstractions/data_channel.dart';
 
 class ReceiverView extends StatefulWidget {
   const ReceiverView({Key? key}) : super(key: key);
@@ -88,29 +84,17 @@ class _ReceiverViewState extends State<ReceiverView> {
         msg: "Starting file reception..."
     );
 
-    // set bootstrap channel
-    BootstrapChannel bootstrapChannel;
-    switch(Provider.of<AppModel>(context, listen: false).bootstrapChannelType) {
-      case BootstrapChannelType.qrCode:
-        bootstrapChannel = QrCodeBootstrapChannel(context);
-        break;
-      case BootstrapChannelType.ble:
-        bootstrapChannel = BleBootstrapChannel(context);
-        break;
-      default:
-        throw UnimplementedError("Bootstrap channel not initialized.");
-    }
+    // Configure bootstrap + data channels
+    AppModel model = Provider.of<AppModel>(context, listen: false);
+    BootstrapChannel bootstrapChannel = model.getBootstrapChannel(context);
+    List<DataChannel> dataChannels = model.getDataChannels(context);
+
     Receiver receiver = Receiver(bootstrapChannel);
-
-    // add data channels
-    for (var type in Provider.of<AppModel>(context, listen: false).dataChannelTypes) {
-      switch(type) {
-        case DataChannelType.wifi:
-          receiver.useChannel( WifiDataChannel("wifi_data_channel") );
-          break;
-      }
+    for (DataChannel channel in dataChannels) {
+      receiver.useChannel(channel);
     }
 
+    // Receive file
     await receiver.receiveFile(_destination!);
     Fluttertoast.showToast( msg: "File successfully received!" );
   }

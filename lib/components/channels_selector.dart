@@ -21,6 +21,8 @@ class ChannelsSelector extends StatelessWidget {
     switch(type) {
       case DataChannelType.wifi:
         await Permission.locationWhenInUse.request();
+        // Prompt user for nearby devices detection permission (on Android SDK > 32)
+        await Permission.nearbyWifiDevices.request();
         break;
     }
   }

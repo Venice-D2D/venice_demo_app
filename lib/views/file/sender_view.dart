@@ -112,5 +112,11 @@ class _SenderViewState extends State<SenderView> {
     // Send file
     await scheduler.sendFile(file!, 100000);
     Fluttertoast.showToast( msg: "File successfully sent!" );
+
+    // Clean up resources
+    bootstrapChannel.close();
+    for (DataChannel channel in dataChannels) {
+      channel.close();
+    }
   }
 }

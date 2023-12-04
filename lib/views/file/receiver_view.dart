@@ -114,5 +114,11 @@ class _ReceiverViewState extends State<ReceiverView> {
     // Receive file
     await receiver.receiveFile(_destination!);
     Fluttertoast.showToast( msg: "File successfully received!" );
+
+    // Clean up resources
+    bootstrapChannel.close();
+    for (DataChannel channel in dataChannels) {
+      channel.close();
+    }
   }
 }

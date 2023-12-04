@@ -131,5 +131,11 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
       msg: "Text copied successfully!",
       toastLength: Toast.LENGTH_LONG
     );
+
+    // Clean up resources
+    bootstrapChannel.close();
+    for (DataChannel channel in dataChannels) {
+      channel.close();
+    }
   }
 }

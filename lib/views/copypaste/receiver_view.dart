@@ -101,6 +101,12 @@ class _CopyPasteReceiverViewState extends State<CopyPasteReceiverView> {
         msg: "Text copied successfully!",
         toastLength: Toast.LENGTH_LONG
     );
+
+    // Clean up resources
+    bootstrapChannel.close();
+    for (DataChannel channel in dataChannels) {
+      channel.close();
+    }
   }
 
   @override

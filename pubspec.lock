@@ -30,7 +30,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8b2d1e686891461960b739467df60eafb3830d49"
+      resolved-ref: "028bd15096dd8545d020f550e77818cd2a5e32c3"
       url: "https://github.com/Venice-D2D/ble_bootstrap_channel.git"
     source: git
     version: "0.0.1"

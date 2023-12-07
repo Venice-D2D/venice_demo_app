@@ -78,7 +78,7 @@ class _VideoSenderViewState extends State<VideoSenderView> {
     channel.on = (DataChannelEvent event, dynamic data) {
       switch(event) {
         case DataChannelEvent.acknowledgment:
-          lastAck = int.parse(data);
+          lastAck = data;
           break;
         default:
           break;
@@ -117,15 +117,16 @@ class _VideoSenderViewState extends State<VideoSenderView> {
       t.cancel();
     });
 
-    // TODO while true send messages over channels
+    // while true send messages over channels
     while (true) {
       if (messages.isEmpty) {
-        await Future.delayed(const Duration(milliseconds: 100));
+        await Future.delayed(const Duration(milliseconds: 1));
+        continue;
       }
       VeniceMessage toSend = messages.removeFirst();
-      channel.sendMessage(toSend);
+      await channel.sendMessage(toSend);
       while (lastAck != toSend.messageId) {
-        await Future.delayed(const Duration(milliseconds: 10));
+        await Future.delayed(const Duration(milliseconds: 1));
       }
     }
   }

@@ -23,7 +23,7 @@ class CopyPasteSenderView extends StatefulWidget {
 
 class _CopyPasteViewState extends State<CopyPasteSenderView> {
   /// Text to be send through network.
-  String textToSend = "\"Prouver que j’ai raison serait accorder que je puis avoir tort.\"";
+  String textToSend = "\"Fear will always make you blind.\" - Daft Punk, Todd Edwards";
 
   @override
   Widget build(BuildContext context) {

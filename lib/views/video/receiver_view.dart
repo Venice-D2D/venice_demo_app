@@ -76,11 +76,17 @@ class _VideoReceiverViewState extends State<VideoReceiverView> {
     // Only use one data channel for now
     DataChannel channel = dataChannels.first;
     channel.on = (DataChannelEvent event, dynamic data) {
-      VeniceMessage chunk = data;
-      channel.sendMessage(VeniceMessage.acknowledgement(chunk.messageId));
-      setState(() {
-        imageData = chunk.data;
-      });
+      switch(event) {
+        case DataChannelEvent.acknowledgment:
+          throw UnimplementedError();
+        case DataChannelEvent.data:
+          VeniceMessage chunk = data;
+          channel.sendMessage(VeniceMessage.acknowledgement(chunk.messageId));
+          setState(() {
+            imageData = chunk.data;
+          });
+          break;
+      }
     };
 
     // Wait for bootstrap channel to receive channel information and initialize
@@ -93,6 +99,10 @@ class _VideoReceiverViewState extends State<VideoReceiverView> {
       msg: "Ready to receive data!",
       toastLength: Toast.LENGTH_LONG
     );
+
+    while (true) {
+      await Future.delayed(const Duration(minutes: 1));
+    }
   }
 
   @override
@@ -100,6 +110,7 @@ class _VideoReceiverViewState extends State<VideoReceiverView> {
     return Consumer<AppModel>(
         builder: (context, model, child) {
           return Scaffold(
+            body: imageData == null ? Container() : Image.memory(imageData!),
             bottomNavigationBar: ElevatedButton(
               onPressed: canReceiveVideo() ? () => startReceivingStreaming(context) : null,
               style: ButtonStyle(

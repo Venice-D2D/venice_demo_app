@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:camera/camera.dart';
@@ -6,6 +7,11 @@ import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:file_exchange_example_app/views/video/image_encoding.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
+import 'package:venice_core/channels/abstractions/data_channel.dart';
+import 'package:venice_core/channels/events/data_channel_event.dart';
+import 'package:venice_core/metadata/file_metadata.dart';
+import 'package:venice_core/network/message.dart';
 
 /// UI for the video streaming sending part of the application.
 ///
@@ -23,9 +29,6 @@ class _VideoSenderViewState extends State<VideoSenderView> {
   /// streaming.
   late CameraController controller;
 
-  /// Bytes of the last camera image received.
-  Uint8List? imageBytes;
-
   /// This frames-per-second (FPS) indicator informs developers about device
   /// performances while video streaming is happening: an image encoding process
   /// is required to send images through the network, and it might have an
@@ -36,7 +39,7 @@ class _VideoSenderViewState extends State<VideoSenderView> {
   void initState() {
     super.initState();
     availableCameras().then((cameras) {
-      controller = CameraController(cameras[0], ResolutionPreset.high);
+      controller = CameraController(cameras[0], ResolutionPreset.low);
       controller.initialize();
     });
   }
@@ -55,13 +58,44 @@ class _VideoSenderViewState extends State<VideoSenderView> {
   ///
   /// During the process, some toast messages will be displayed to inform user
   /// about what's going on.
-  void startVideoStreaming(BuildContext context) {
+  void startVideoStreaming(BuildContext context) async {
+    // Configure bootstrap + data channels
+    AppModel model = Provider.of<AppModel>(context, listen: false);
+    BootstrapChannel bootstrapChannel = model.getBootstrapChannel(context);
+    List<DataChannel> dataChannels = model.getDataChannels(context);
+
+    // Open all channels
+    await bootstrapChannel.initSender();
+    // Fake data
+    await bootstrapChannel.sendFileMetadata(
+        FileMetadata("this is a video", 100000, 1)
+    );
+    await Future.wait(dataChannels.map((c) => c.initSender( bootstrapChannel )));
+
+    // Use one data channel for now
+    DataChannel channel = dataChannels.first;
+    int lastAck = -1;
+    channel.on = (DataChannelEvent event, dynamic data) {
+      switch(event) {
+        case DataChannelEvent.acknowledgment:
+          lastAck = int.parse(data);
+          break;
+        default:
+          break;
+      }
+    };
+
+    // Queue of video chunks to be sent
+    int messageId = 0;
+    Queue<VeniceMessage> messages = Queue();
+
+    // Setup video streaming
     imagesCount = 0;
     controller.startImageStream((image) {
       imagesCount += 1;
-      setState(() {
-        imageBytes = convertYUV420toImageColor(image);
-      });
+      VeniceMessage msg = VeniceMessage.data(messageId, convertYUV420toImageColor(image));
+      messages.add(msg);
+      messageId += 1;
     });
 
     // Update frames-per-second indicator every second
@@ -82,6 +116,18 @@ class _VideoSenderViewState extends State<VideoSenderView> {
       controller.stopImageStream();
       t.cancel();
     });
+
+    // TODO while true send messages over channels
+    while (true) {
+      if (messages.isEmpty) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+      VeniceMessage toSend = messages.removeFirst();
+      channel.sendMessage(toSend);
+      while (lastAck != toSend.messageId) {
+        await Future.delayed(const Duration(milliseconds: 10));
+      }
+    }
   }
 
   @override
@@ -89,8 +135,6 @@ class _VideoSenderViewState extends State<VideoSenderView> {
     return Consumer<AppModel>(
         builder: (context, model, child) {
           return Scaffold(
-            // Displays last camera image, used for debug purposes
-            body: imageBytes == null ? Container() : Image.memory(imageBytes!),
             bottomNavigationBar: ElevatedButton(
               onPressed: canSendVideo() ? () => startVideoStreaming(context) : null,
               style: ButtonStyle(

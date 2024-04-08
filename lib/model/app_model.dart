@@ -65,16 +65,6 @@ class AppModel extends ChangeNotifier {
   /// Returns an array of data channels that matches the currently selected
   /// channels, and can be used in data exchanges.
   List<DataChannel> getDataChannels(BuildContext context) {
-    List<DataChannel> channels = [];
-
-    for (var type in dataChannelTypes) {
-      switch(type) {
-        case DataChannelType.wifi:
-          channels.add( WifiDataChannel("wifi_data_channel") );
-          break;
-      }
-    }
-
-    return channels;
+    return _dataChannelTypes.map((type) => type.dataChannel).toList();
   }
 }

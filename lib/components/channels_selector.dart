@@ -33,6 +33,9 @@ class ChannelsSelector extends StatelessWidget {
         // Prompt user for nearby devices detection permission (on Android SDK > 32)
         await Permission.nearbyWifiDevices.request();
         break;
+      case DataChannelType.ble:
+        await Permission.bluetooth.request();
+        break;
     }
   }
 
@@ -77,6 +80,14 @@ class ChannelsSelector extends StatelessWidget {
               trailing: Checkbox(
                   value: model.dataChannelTypes.contains(DataChannelType.wifi),
                   onChanged: (v) => _toggleDataChannelType(DataChannelType.wifi, model)
+              ),
+            ),
+            ListTile(
+              title: const Text('BLE'),
+              onTap: () => _toggleDataChannelType(DataChannelType.ble, model),
+              trailing: Checkbox(
+                  value: model.dataChannelTypes.contains(DataChannelType.ble),
+                  onChanged: (v) => _toggleDataChannelType(DataChannelType.ble, model)
               ),
             ),
             Container(

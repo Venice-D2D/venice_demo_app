@@ -38,7 +38,7 @@ class _CopyPastePageState extends State<CopyPastePage> {
                 child: ChannelsSelector(),
               ),
               Expanded(
-                flex: 4,
+                flex: 3,
                 child: TabBarView(
                   children: [
                     CopyPasteSenderView(),

@@ -44,42 +44,39 @@ class ChannelsSelector extends StatelessWidget {
     )).toList();
   }
 
+  List<Widget> _getBootstrapChannelTiles(AppModel model) {
+    return BootstrapChannelType.values.map((type) => RadioListTile<BootstrapChannelType>(
+      title: Text(type.label),
+      value: type,
+      groupValue: model.bootstrapChannelType,
+      onChanged: (v) {
+        model.bootstrapChannelType = v!;
+      },
+    )).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (context, model, child) {
-        List<Widget> children = [
-          Container(
-            margin: const EdgeInsets.all(20),
-            child: const Text(
-              'Select bootstrap channel:',
-            ),
+        List<Widget> children = [];
+
+        // Bootstrap channels
+        children.add(Container(
+          margin: const EdgeInsets.all(20),
+          child: const Text(
+            'Select bootstrap channel:',
           ),
-          RadioListTile<BootstrapChannelType>(
-            title: const Text('QR code'),
-            value: BootstrapChannelType.qrCode,
-            groupValue: model.bootstrapChannelType,
-            onChanged: (v) {
-              model.bootstrapChannelType = v!;
-            },
-          ),
-          RadioListTile<BootstrapChannelType>(
-            title: const Text('BLE'),
-            value: BootstrapChannelType.ble,
-            groupValue: model.bootstrapChannelType,
-            onChanged: (v) {
-              model.bootstrapChannelType = v!;
-            },
-          ),
-          Container(
-            margin: const EdgeInsets.all(20),
-            child: const Text(
-              'Select data channels (at least one):',
-            ),
-          ),
-        ];
+        ));
+        children.addAll(_getBootstrapChannelTiles(model));
 
         // Data channels
+        children.add(Container(
+          margin: const EdgeInsets.all(20),
+          child: const Text(
+            'Select data channels (at least one):',
+          ),
+        ));
         children.addAll(_getDataChannelTiles(model));
 
         children.add(Container(

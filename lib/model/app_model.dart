@@ -6,6 +6,7 @@ import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
+import 'package:wifi_data_channel/simple_wifi_data_channel.dart';
 
 /// State of the application.
 ///
@@ -70,7 +71,7 @@ class AppModel extends ChangeNotifier {
     for (var type in dataChannelTypes) {
       switch(type) {
         case DataChannelType.wifi:
-          channels.add( WifiDataChannel("wifi_data_channel") );
+          channels.add(SimpleWifiDataChannel("wifi_data_channel") );
           break;
       }
     }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:provider/provider.dart';
@@ -120,7 +121,10 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
           break;
       }
     };
-    VeniceMessage message = VeniceMessage.data(0, utf8.encode(textToSend));
+    final List<int> codeUnits = textToSend.codeUnits;
+    final Uint8List unit8List = Uint8List.fromList(codeUnits);
+    //VeniceMessage message = VeniceMessage.data(0, utf8.encode(textToSend));
+    VeniceMessage message = VeniceMessage.data(0, unit8List);
     dataChannels.first.sendMessage( message );
 
     while(!transmitted) {

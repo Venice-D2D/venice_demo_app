@@ -34,6 +34,15 @@ packages:
       url: "https://github.com/Venice-D2D/ble_bootstrap_channel.git"
     source: git
     version: "0.0.1"
+  ble_data_channel:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "79204b83638ed6ca54cc82f65c0b6178074d63eb"
+      url: "https://github.com/Venice-D2D/ble_data_channel.git"
+    source: git
+    version: "0.0.1"
   bluetooth_low_energy:
     dependency: transitive
     description:

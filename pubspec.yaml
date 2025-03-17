@@ -35,7 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   file_picker: ^9.2.0
-  fluttertoast: ^8.0.9
+  fluttertoast: ^8.2.12
   venice_core:
     git: https://github.com/Venice-D2D/venice_core.git
   delta_scheduler:

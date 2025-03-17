@@ -383,10 +383,10 @@ packages:
     dependency: transitive
     description:
       name: mobile_scanner
-      sha256: "531725451c7506f4c57b4720da1fe33a1394cdf9d4a5075a3a2dd51e21113928"
+      sha256: "9cb9e371ee9b5b548714f9ab5fd33b530d799745c83d5729ecd1e8ab2935dbd1"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "6.0.7"
   nested:
     dependency: transitive
     description:
@@ -487,8 +487,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "733ae9f27526ce178fde3b854f27515ac28b1f79"
+      ref: "v3.29.2"
+      resolved-ref: b032252e1cf4f2383cb67a0e8b29a4eed142990b
       url: "https://github.com/Venice-D2D/qr_code_bootstrap_channel.git"
     source: git
     version: "0.0.1"
@@ -602,12 +602,20 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.1"
+  web:
+    dependency: transitive
+    description:
+      name: web
+      sha256: "868d88a33d8a87b18ffc05f9f030ba328ffefba92d6c127917a2ba740f9cfe4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   wifi_data_channel:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: a98165e0302d950367e238be4afffb6eb5ce3391
+      ref: "v3.29.2"
+      resolved-ref: "6060bf1f5faf156ebcdde809a3044895c5dade25"
       url: "https://github.com/Venice-D2D/wifi_data_channel.git"
     source: git
     version: "0.0.1"
@@ -615,18 +623,18 @@ packages:
     dependency: transitive
     description:
       name: wifi_iot
-      sha256: "8a0f74debaad06ec2ff869aa5f32eea8a1d3131da3ae7de655e7af6de5d0d8df"
+      sha256: "0861aed0c0afd6031b4337811d31cdd181c594a8a2c73e94826ea21d2cb4707b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.18+1"
+    version: "0.3.19+2"
   wifi_scan:
     dependency: transitive
     description:
       name: wifi_scan
-      sha256: "01c737b2392b60829d5d07fef782fa5e95e47b25d1728f58f871df1b87c5ebfb"
+      sha256: "78896ea3db8838769053accd47cab02a62ead6480557e235295320603f84c9c7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0+2"
+    version: "0.4.1+2"
   win32:
     dependency: transitive
     description:
@@ -645,4 +653,4 @@ packages:
     version: "6.4.2"
 sdks:
   dart: ">=3.7.0-0 <4.0.0"
-  flutter: ">=3.18.0-18.0.pre.54"
+  flutter: ">=3.22.0"

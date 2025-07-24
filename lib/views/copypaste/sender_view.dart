@@ -36,7 +36,7 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
             child: SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               child: Container(
-                margin: const EdgeInsets.all(50),
+                margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 50),
                 child: TextFormField(
                   initialValue: textToSend,
                   minLines: 2,

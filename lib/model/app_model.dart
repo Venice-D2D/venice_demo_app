@@ -1,4 +1,3 @@
-import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
 import 'package:flutter/material.dart';
@@ -48,38 +47,15 @@ class AppModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Returns a bootstrap channel instance that matches the currently selected
-  /// channel, and can be used in data exchanges.
+  /// Returns a bootstrap channel instance that can be used in data exchanges.
   BootstrapChannel getBootstrapChannel(BuildContext context) {
-    BootstrapChannel bootstrapChannel;
-    switch(bootstrapChannelType) {
-      case BootstrapChannelType.qrCode:
-        bootstrapChannel = QrCodeBootstrapChannel(context);
-        break;
-      case BootstrapChannelType.ble:
-        bootstrapChannel = BleBootstrapChannel(context);
-        _requestBLEPermissions();
-        break;
-      default:
-        throw UnimplementedError("Bootstrap channel not initialized.");
-    }
-    return bootstrapChannel;
+    return bootstrapChannelType.getBootstrapChannel(context);
   }
 
   /// Returns an array of data channels that matches the currently selected
   /// channels, and can be used in data exchanges.
   List<DataChannel> getDataChannels(BuildContext context) {
-    List<DataChannel> channels = [];
-
-    for (var type in dataChannelTypes) {
-      switch(type) {
-        case DataChannelType.wifi:
-          channels.add(SimpleWifiDataChannel("wifi_data_channel") );
-          break;
-      }
-    }
-
-    return channels;
+    return _dataChannelTypes.map((type) => type.dataChannel).toList();
   }
 
   Future<void> _requestBLEPermissions() async {

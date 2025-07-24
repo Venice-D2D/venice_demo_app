@@ -27,63 +27,66 @@ class ChannelsSelector extends StatelessWidget {
   /// Asks user to give all permissions required by channel [type] to the demo
   /// app.
   void _checkAssociatedPermissions(DataChannelType type) async {
-    switch(type) {
-      case DataChannelType.wifi:
-        await Permission.locationWhenInUse.request();
-        // Prompt user for nearby devices detection permission (on Android SDK > 32)
-        await Permission.nearbyWifiDevices.request();
-        break;
+    List<Permission> requiredPermissions = type.neededPermissions;
+    for (Permission permission in requiredPermissions) {
+      await permission.request();
     }
+  }
+
+  List<Widget> _getDataChannelTiles(AppModel model) {
+    return DataChannelType.values.map((type) => ListTile(
+      title: Text(type.label),
+      onTap: () => _toggleDataChannelType(type, model),
+      trailing: Checkbox(
+          value: model.dataChannelTypes.contains(type),
+          onChanged: (v) => _toggleDataChannelType(type, model)
+      ),
+    )).toList();
+  }
+
+  List<Widget> _getBootstrapChannelTiles(AppModel model) {
+    return BootstrapChannelType.values.map((type) => RadioListTile<BootstrapChannelType>(
+      title: Text(type.label),
+      value: type,
+      groupValue: model.bootstrapChannelType,
+      onChanged: (v) {
+        model.bootstrapChannelType = v!;
+      },
+    )).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppModel>(
       builder: (context, model, child) {
+        List<Widget> children = [];
+
+        // Bootstrap channels
+        children.add(Container(
+          margin: const EdgeInsets.all(20),
+          child: const Text(
+            'Select bootstrap channel:',
+          ),
+        ));
+        children.addAll(_getBootstrapChannelTiles(model));
+
+        // Data channels
+        children.add(Container(
+          margin: const EdgeInsets.all(20),
+          child: const Text(
+            'Select data channels (at least one):',
+          ),
+        ));
+        children.addAll(_getDataChannelTiles(model));
+
+        children.add(Container(
+          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+          child: const Divider(),
+        ));
+
         return Flex(
           direction: Axis.vertical,
-          children: [
-            Container(
-              margin: const EdgeInsets.all(20),
-              child: const Text(
-                'Select bootstrap channel:',
-              ),
-            ),
-            RadioListTile<BootstrapChannelType>(
-              title: const Text('QR code'),
-              value: BootstrapChannelType.qrCode,
-              groupValue: model.bootstrapChannelType,
-              onChanged: (v) {
-                model.bootstrapChannelType = v!;
-              },
-            ),
-            RadioListTile<BootstrapChannelType>(
-              title: const Text('BLE'),
-              value: BootstrapChannelType.ble,
-              groupValue: model.bootstrapChannelType,
-              onChanged: (v) {
-                model.bootstrapChannelType = v!;
-              },
-            ),
-            Container(
-              margin: const EdgeInsets.all(20),
-              child: const Text(
-                'Select data channels (at least one):',
-              ),
-            ),
-            ListTile(
-              title: const Text('Wi-Fi'),
-              onTap: () => _toggleDataChannelType(DataChannelType.wifi, model),
-              trailing: Checkbox(
-                  value: model.dataChannelTypes.contains(DataChannelType.wifi),
-                  onChanged: (v) => _toggleDataChannelType(DataChannelType.wifi, model)
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-              child: const Divider(),
-            ),
-          ],
+          children: children,
         );
       },
     );

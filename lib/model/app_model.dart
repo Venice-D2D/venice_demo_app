@@ -2,11 +2,13 @@ import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
 import 'package:file_exchange_example_app/channelTypes/bootstrap_channel_type.dart';
 import 'package:file_exchange_example_app/channelTypes/data_channel_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 import 'package:wifi_data_channel/simple_wifi_data_channel.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 /// State of the application.
 ///
@@ -56,6 +58,7 @@ class AppModel extends ChangeNotifier {
         break;
       case BootstrapChannelType.ble:
         bootstrapChannel = BleBootstrapChannel(context);
+        _requestBLEPermissions();
         break;
       default:
         throw UnimplementedError("Bootstrap channel not initialized.");
@@ -77,5 +80,26 @@ class AppModel extends ChangeNotifier {
     }
 
     return channels;
+  }
+
+  Future<void> _requestBLEPermissions() async {
+    debugPrint("[AppModel] Asking for bluetooth permissions");
+    PermissionStatus permStatusBluetooth;
+    PermissionStatus permStatusBluetoothConnect;
+    PermissionStatus permStatusBluetoothScan;
+    PermissionStatus permStatusBluetoothAdvertise;
+    PermissionStatus permStatusLocation;
+
+    permStatusBluetooth= await Permission.bluetooth.request(); // Legacy
+    permStatusBluetoothScan=await Permission.bluetoothScan.request(); // Android 12+
+    permStatusBluetoothConnect=await Permission.bluetoothConnect.request(); // Android 12+
+    permStatusLocation=await Permission.location.request(); // Required for BLE scanning
+    permStatusBluetoothAdvertise=await Permission.bluetoothAdvertise.request();
+    debugPrint("[AppModel] Asking for bluetooth permissions ended");
+    debugPrint("[AppModel] Bluetooth Permission Granted: ${permStatusBluetooth.isGranted}");
+    debugPrint("[AppModel] Bluetooth Scan Permission Granted: ${permStatusBluetoothScan.isGranted}");
+    debugPrint("[AppModel] Bluetooth Connect Permission Granted: ${permStatusBluetoothConnect.isGranted}");
+    debugPrint("[AppModel] Location Permission Granted: ${permStatusLocation.isGranted}");
+    debugPrint("[AppModel] Bluetooth Advertise Permission Granted: ${permStatusBluetoothAdvertise.isGranted}");
   }
 }

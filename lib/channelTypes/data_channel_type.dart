@@ -1,11 +1,13 @@
 import 'package:ble_data_channel/ble_data_channel.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
+import 'package:wifi_data_channel/simple_wifi_data_channel.dart';
 import 'package:wifi_data_channel/wifi_data_channel.dart';
 
 enum DataChannelType {
   ble,
-  wifi
+  wifi,
+  simpleWifi
 }
 
 extension DataChannelTypeUtils on DataChannelType {
@@ -15,6 +17,8 @@ extension DataChannelTypeUtils on DataChannelType {
         return 'BLE';
       case DataChannelType.wifi:
         return 'Wi-Fi';
+      case DataChannelType.simpleWifi:
+        return 'Simple-Wifi-Fi';
     }
   }
 
@@ -28,6 +32,12 @@ extension DataChannelTypeUtils on DataChannelType {
           // Prompt user for nearby devices detection permission (on Android SDK > 32)
           Permission.nearbyWifiDevices
         ];
+      case DataChannelType.simpleWifi:
+        return [
+          Permission.locationWhenInUse,
+          // Prompt user for nearby devices detection permission (on Android SDK > 32)
+          //Permission.nearbyWifiDevices
+        ];
     }
   }
 
@@ -38,6 +48,8 @@ extension DataChannelTypeUtils on DataChannelType {
         return BleDataChannel("ble_data_channel");
       case DataChannelType.wifi:
         return WifiDataChannel("wifi_data_channel");
+      case DataChannelType.simpleWifi:
+        return SimpleWifiDataChannel("simple_wifi_data_channel");
     }
   }
 }

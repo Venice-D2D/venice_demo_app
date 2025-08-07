@@ -44,8 +44,6 @@ dependencies:
     git:
       url: https://github.com/Venice-D2D/wifi_data_channel.git
       ref: v3.29.2
-  ble_data_channel:
-    git: https://github.com/Venice-D2D/ble_data_channel.git
   ble_bootstrap_channel:
     git: https://github.com/Venice-D2D/ble_bootstrap_channel.git
   qr_code_bootstrap_channel:

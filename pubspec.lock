@@ -470,8 +470,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v3.29.2"
-      resolved-ref: b032252e1cf4f2383cb67a0e8b29a4eed142990b
+      ref: HEAD
+      resolved-ref: eb805f468d7c1e612d76b37d74867d6fade7319e
       url: "https://github.com/Venice-D2D/qr_code_bootstrap_channel.git"
     source: git
     version: "0.0.1"
@@ -589,8 +589,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "v3.29.2"
-      resolved-ref: "6060bf1f5faf156ebcdde809a3044895c5dade25"
+      ref: HEAD
+      resolved-ref: cae87c1d9a08536b16b41e9844154b6b6d609f6d
       url: "https://github.com/Venice-D2D/wifi_data_channel.git"
     source: git
     version: "0.0.1"

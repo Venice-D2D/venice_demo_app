@@ -41,15 +41,11 @@ dependencies:
   delta_scheduler:
     git: https://github.com/Venice-D2D/delta_scheduler.git
   wifi_data_channel:
-    git:
-      url: https://github.com/Venice-D2D/wifi_data_channel.git
-      ref: v3.29.2
+    git: https://github.com/Venice-D2D/wifi_data_channel.git
   ble_bootstrap_channel:
     git: https://github.com/Venice-D2D/ble_bootstrap_channel.git
   qr_code_bootstrap_channel:
-    git:
-      url: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
-      ref: v3.29.2
+    git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
   permission_handler: ^11.4.0
   provider: ^6.1.1
   camera: ^0.11.1

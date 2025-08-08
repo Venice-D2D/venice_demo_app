@@ -34,8 +34,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  file_picker: ^5.5.0
-  fluttertoast: ^8.0.9
+  file_picker: ^9.2.0
+  fluttertoast: ^8.2.12
   venice_core:
     git: https://github.com/Venice-D2D/venice_core.git
   delta_scheduler:
@@ -46,10 +46,10 @@ dependencies:
     git: https://github.com/Venice-D2D/ble_bootstrap_channel.git
   qr_code_bootstrap_channel:
     git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
-  permission_handler: ^11.0.1
+  permission_handler: ^11.4.0
   provider: ^6.1.1
-  camera: ^0.10.5+5
-  image: ^4.1.3
+  camera: ^0.11.1
+  image: ^4.5.3
 
 dev_dependencies:
   flutter_test:

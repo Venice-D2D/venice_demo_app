@@ -4,6 +4,8 @@ import 'package:file_exchange_example_app/model/app_model.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'dart:io';
+import 'package:network_info_plus/network_info_plus.dart';
 
 /// UI for the channels selection that's used in all experiment subviews of this
 /// application.
@@ -27,10 +29,21 @@ class ChannelsSelector extends StatelessWidget {
   /// Asks user to give all permissions required by channel [type] to the demo
   /// app.
   void _checkAssociatedPermissions(DataChannelType type) async {
-    List<Permission> requiredPermissions = type.neededPermissions;
-    for (Permission permission in requiredPermissions) {
-      await permission.request();
+
+    if(!Platform.isLinux) {
+      List<Permission> requiredPermissions = type.neededPermissions;
+      for (Permission permission in requiredPermissions) {
+        debugPrint('[SimpleWifiChannel] Asking for permission: ${permission.toString()}');
+        final status = await permission.request();
+
+        debugPrint('[SimpleWifiChannel] Permission status: ${status.toString()}');
+      }
     }
+
+    final networkInfoManager = NetworkInfo();
+
+    final networkName = await networkInfoManager.getWifiName();
+    debugPrint('[SimpleWifiChannel] Name: $networkName');
   }
 
   List<Widget> _getDataChannelTiles(AppModel model) {

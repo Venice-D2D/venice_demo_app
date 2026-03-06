@@ -6,7 +6,6 @@ import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:delta_scheduler/receiver/receiver.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
 
 /// UI for the file reception part of the application.
@@ -91,15 +90,27 @@ class _ReceiverViewState extends State<ReceiverView> {
   /// about what's going on.
   Future<void> _startReceivingFile(BuildContext context) async {
     if (_destination == null) {
-      Fluttertoast.showToast(
-          msg: "Select a destination directory before starting file reception."
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Select a destination directory before starting file reception."),
+          duration: Duration(seconds: 2),
+        ),
       );
+      
       return;
     }
 
-    Fluttertoast.showToast(
-        msg: "Starting file reception..."
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Starting file reception..."),
+        duration: Duration(seconds: 2),
+      ),
     );
+
+    /*Fluttertoast.showToast(
+        msg: "Starting file reception..."
+    );*/
 
     // Configure bootstrap + data channels
     AppModel model = Provider.of<AppModel>(context, listen: false);
@@ -113,7 +124,16 @@ class _ReceiverViewState extends State<ReceiverView> {
 
     // Receive file
     await receiver.receiveFile(_destination!);
-    Fluttertoast.showToast( msg: "File successfully received!" );
+
+    if(context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("File successfully received!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+    //Fluttertoast.showToast( msg: "File successfully received!" );
 
     // Clean up resources
     bootstrapChannel.close();

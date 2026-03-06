@@ -2,6 +2,7 @@ import 'package:async/src/cancelable_operation.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
 import 'package:delta_scheduler/scheduler/scheduler.dart';
 import 'package:venice_core/network/message.dart';
+import 'package:flutter/material.dart';
 
 class SchedulerImplementation extends Scheduler {
   SchedulerImplementation(super.bootstrapChannel);
@@ -13,6 +14,7 @@ class SchedulerImplementation extends Scheduler {
         await Future.delayed(const Duration(milliseconds: 200));
       } else {
         // TODO for the demonstration we send messages one by one on a single channel
+        debugPrint("[SchedulerImplementation::sendMessages] Sending message...");
         VeniceMessage msg = messages.removeAt(0);
         sendMessage(msg, channels[0]);
         while (resubmissionTimers.containsKey(msg.messageId)) {

@@ -65,12 +65,11 @@ class _VideoSenderViewState extends State<VideoSenderView> {
     List<DataChannel> dataChannels = model.getDataChannels(context);
 
     // Open all channels
-    await bootstrapChannel.initSender();
-    // Fake data
-    await bootstrapChannel.sendFileMetadata(
-        FileMetadata("this is a video", 100000, 1)
-    );
     await Future.wait(dataChannels.map((c) => c.initSender( bootstrapChannel )));
+    FileMetadata fileData = FileMetadata("this is a video", 100000, 1);
+    await bootstrapChannel.initSender(FileMetadata("", -1, -1), dataChannels[0].data); //TODO HOW TO CHOOSE THE DATA CHANNEL ?
+    // Fake data
+    await bootstrapChannel.sendFileMetadata(fileData);
 
     // Use one data channel for now
     DataChannel channel = dataChannels.first;

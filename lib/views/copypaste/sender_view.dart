@@ -102,9 +102,10 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
     List<DataChannel> dataChannels = model.getDataChannels(context);
 
     // Open all channels
-    FileMetadata fileData = FileMetadata("hello there", 100000, 1);
-    await bootstrapChannel.initSender(fileData, dataChannels[0].data); //TODO HOW TO SHOW THE DATA CHANNEL ?
     // Fake data
+    FileMetadata fileData = FileMetadata("", 0, 0);
+    await bootstrapChannel.initSender(fileData, dataChannels[0].data); //TODO HOW TO CHOOSE THE DATA CHANNEL ?
+
     await bootstrapChannel.sendFileMetadata(
         fileData
     );

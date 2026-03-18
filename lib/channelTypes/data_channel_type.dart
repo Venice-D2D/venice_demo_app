@@ -35,7 +35,9 @@ extension DataChannelTypeUtils on DataChannelType {
           // Prompt user for nearby devices detection permission (on Android SDK > 32)
           Permission.nearbyWifiDevices,
           Permission.bluetoothScan,
-          Permission.bluetoothConnect
+          Permission.bluetoothConnect,
+          Permission.bluetoothAdvertise,
+          //Permission.bluetooth
         ];
     }
   }

@@ -33,17 +33,17 @@ class ChannelsSelector extends StatelessWidget {
     if(!Platform.isLinux) {
       List<Permission> requiredPermissions = type.neededPermissions;
       for (Permission permission in requiredPermissions) {
-        debugPrint('[SimpleWifiChannel] Asking for permission: ${permission.toString()}');
+        debugPrint('[ChannelsSelector] Asking for permission: ${permission.toString()}');
         final status = await permission.request();
 
-        debugPrint('[SimpleWifiChannel] Permission status: ${status.toString()}');
+        debugPrint('[ChannelsSelector] Permission status: ${status.toString()}');
       }
     }
 
     final networkInfoManager = NetworkInfo();
 
     final networkName = await networkInfoManager.getWifiName();
-    debugPrint('[SimpleWifiChannel] Name: $networkName');
+    debugPrint('[SimpleWifiChannel] Network Name: $networkName');
   }
 
   List<Widget> _getDataChannelTiles(AppModel model) {

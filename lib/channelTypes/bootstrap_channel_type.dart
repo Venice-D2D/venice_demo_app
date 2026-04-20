@@ -1,5 +1,5 @@
 import 'package:ble_bootstrap_channel/ble_bootstrap_channel.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:qr_code_bootstrap_channel/qr_code_bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 

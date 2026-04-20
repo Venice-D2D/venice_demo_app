@@ -37,7 +37,7 @@ class _SenderViewState extends State<SenderView> {
                   onPressed: () async {
                     // Please note that selecting a file that does not belong to
                     // current user will throw an error.
-                    FilePickerResult? result = await FilePicker.platform.pickFiles();
+                    FilePickerResult? result = await FilePicker.pickFiles();
                     if (result != null) {
                       setState(() {
                         file = File(result.files.single.path!);

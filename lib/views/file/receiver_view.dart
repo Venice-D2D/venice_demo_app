@@ -35,7 +35,7 @@ class _ReceiverViewState extends State<ReceiverView> {
               margin: const EdgeInsets.all(50),
               child: ElevatedButton(
                   onPressed: () async {
-                    String? result = await FilePicker.platform.getDirectoryPath(dialogTitle: "test");
+                    String? result = await FilePicker.getDirectoryPath(dialogTitle: "test");
                     if (result != null) {
                       setState(() {
                         _destination = Directory(result);

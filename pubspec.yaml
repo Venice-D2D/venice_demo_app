@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.5
   camera: ^0.12.0
   image: ^4.8.0
+  permission_handler: ^12.0.1
 
   # Venice dependencies
   venice_core:
@@ -49,7 +50,6 @@ dependencies:
     git: https://github.com/Venice-D2D/ble_bootstrap_channel.git
   qr_code_bootstrap_channel:
     git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
-  permission_handler: ^11.4.0
   # current_wifi_data_channel:
   #   git: https://github.com/Venice-D2D/current_wifi_data_channel.git
 

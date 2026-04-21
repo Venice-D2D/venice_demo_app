@@ -520,7 +520,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a4dc1865c10359d0a3f555461d3f5c734ec65715
+      resolved-ref: "8d1eb954a3c275860b948e93137fcb956e5b5aed"
       url: "https://github.com/Venice-D2D/qr_code_bootstrap_channel.git"
     source: git
     version: "0.0.1"

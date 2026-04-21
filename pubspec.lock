@@ -199,7 +199,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: aa6706b75df6db7fd957bc8807325e32c3f8618c
+      resolved-ref: c1c1760ae64c9d9240b59dacc5386b49c5ecd619
       url: "https://github.com/Venice-D2D/current_wifi_data_channel.git"
     source: git
     version: "0.0.1"

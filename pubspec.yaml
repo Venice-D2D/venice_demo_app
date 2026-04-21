@@ -50,8 +50,8 @@ dependencies:
     git: https://github.com/Venice-D2D/ble_bootstrap_channel.git
   qr_code_bootstrap_channel:
     git: https://github.com/Venice-D2D/qr_code_bootstrap_channel.git
-  # current_wifi_data_channel:
-  #   git: https://github.com/Venice-D2D/current_wifi_data_channel.git
+  current_wifi_data_channel:
+    git: https://github.com/Venice-D2D/current_wifi_data_channel.git
 
 dev_dependencies:
   flutter_test:

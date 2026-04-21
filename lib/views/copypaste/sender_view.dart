@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:venice_core/channels/abstractions/bootstrap_channel.dart';
 import 'package:venice_core/channels/abstractions/data_channel.dart';
 import 'package:venice_core/channels/events/data_channel_event.dart';
+import 'package:venice_core/metadata/channel_metadata.dart';
 import 'package:venice_core/metadata/file_metadata.dart';
 import 'package:venice_core/network/message.dart';
 
@@ -100,11 +101,10 @@ class _CopyPasteViewState extends State<CopyPasteSenderView> {
     List<DataChannel> dataChannels = model.getDataChannels(context);
 
     // Open all channels
-    await bootstrapChannel.initSender();
     // Fake data
-    await bootstrapChannel.sendFileMetadata(
-        FileMetadata("hello there", 100000, 1)
-    );
+    FileMetadata fileData = FileMetadata("", 0, 0);
+    await bootstrapChannel.initSender(fileData, dataChannels[0].data);
+    await bootstrapChannel.sendFileMetadata(fileData);
     await Future.wait(dataChannels.map((c) => c.initSender( bootstrapChannel )));
 
     // Only use one data channel in this use-case since there's not much data to
